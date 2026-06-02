@@ -8,92 +8,156 @@
     :root {
       --dark: #1a2332;
       --orange: #f0a500;
-      --gray: #f5f7fa;
+      --gray: #f4f5f7;
+      --white: #ffffff;
+      --border: #e2e4e8;
+      --text: #2c3344;
+      --text-light: #6b7280;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background: var(--gray);
-      min-height: 100vh;
-      padding: 3rem 2rem;
-      color: #333;
+      color: var(--text);
+      line-height: 1.6;
     }
 
+    /* HEADER */
     header {
+      background: var(--dark);
+      padding: 4rem 2rem 3.5rem;
       text-align: center;
-      margin-bottom: 3.5rem;
+    }
+
+    .header-label {
+      display: inline-block;
+      color: var(--orange);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-bottom: 1rem;
     }
 
     header h1 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      color: var(--dark);
+      color: var(--white);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
       font-weight: 800;
+      letter-spacing: -0.5px;
       margin-bottom: 0.75rem;
     }
 
-    header p {
-      color: #666;
-      font-size: 1.05rem;
-      max-width: 480px;
-      margin: 0 auto 1.5rem;
+    .header-sub {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.95rem;
+      max-width: 440px;
+      margin: 0 auto 2rem;
     }
 
-    .links {
+    .header-links {
       display: flex;
-      gap: 1rem;
+      gap: 0.75rem;
       justify-content: center;
       flex-wrap: wrap;
     }
 
     .link-btn {
-      padding: 0.55rem 1.25rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
       font-weight: 600;
+      text-decoration: none;
       transition: opacity 0.2s;
     }
 
-    .link-btn:hover { opacity: 0.8; }
-    .link-github { background: var(--dark); color: white; }
-    .link-kwork  { background: var(--orange); color: var(--dark); }
+    .link-btn:hover { opacity: 0.85; }
+    .link-btn svg { width: 16px; height: 16px; stroke: currentColor; }
 
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
+    .link-github {
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.18);
     }
 
+    .link-kwork {
+      background: var(--orange);
+      color: var(--dark);
+    }
+
+    /* MAIN */
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    /* PROJECTS GRID */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    /* PROJECT CARD */
     .project-card {
-      background: white;
-      border-radius: 14px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       text-decoration: none;
       color: inherit;
-      transition: transform 0.25s, box-shadow 0.25s;
       display: flex;
       flex-direction: column;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--orange);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 1;
     }
 
     .project-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.13);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      border-color: transparent;
     }
 
+    .project-card:hover::before { opacity: 1; }
+
+    /* PREVIEW AREA */
     .project-preview {
       background: var(--dark);
-      height: 160px;
+      height: 140px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3.5rem;
+      transition: background 0.25s ease;
     }
 
+    .project-preview svg {
+      width: 44px;
+      height: 44px;
+      stroke: rgba(255,255,255,0.35);
+      transition: stroke 0.25s ease;
+    }
+
+    .project-card:hover .project-preview { background: #1e2d40; }
+    .project-card:hover .project-preview svg { stroke: var(--orange); }
+
+    /* CARD BODY */
     .project-body {
       padding: 1.5rem;
       flex: 1;
@@ -103,93 +167,123 @@
 
     .project-tag {
       display: inline-block;
-      background: #f0f0f0;
-      color: #555;
-      font-size: 0.75rem;
-      font-weight: 600;
+      background: var(--gray);
+      color: var(--text-light);
+      font-size: 0.7rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 0.25rem 0.6rem;
+      letter-spacing: 0.8px;
+      padding: 0.2rem 0.55rem;
       border-radius: 4px;
       margin-bottom: 0.75rem;
     }
 
     .project-body h3 {
-      font-size: 1.15rem;
-      color: var(--dark);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
       margin-bottom: 0.5rem;
+      letter-spacing: -0.2px;
     }
 
     .project-body p {
-      color: #666;
-      font-size: 0.9rem;
-      line-height: 1.6;
+      font-size: 0.875rem;
+      color: var(--text-light);
+      line-height: 1.65;
       flex: 1;
     }
 
     .project-link {
       margin-top: 1.25rem;
-      color: var(--orange);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
+      color: var(--orange);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
     }
 
+    /* FOOTER */
     footer {
+      background: var(--dark);
       text-align: center;
-      margin-top: 3rem;
-      color: #aaa;
+      padding: 1.5rem 2rem;
+      color: rgba(255,255,255,0.3);
       font-size: 0.85rem;
+    }
+
+    @media (max-width: 700px) {
+      .projects { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .projects { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Портфолио веб-разработчика</h1>
-    <p>HTML, CSS, JavaScript — вёрстка и фронтенд. Быстро, чисто, адаптивно.</p>
-    <div class="links">
-      <a class="link-btn link-github" href="https://github.com/seregakuhar-commits" target="_blank">GitHub</a>
-      <a class="link-btn link-kwork" href="#" title="Скоро">Kwork (скоро)</a>
+    <p class="header-label">Портфолио</p>
+    <h1>Веб-разработчик</h1>
+    <p class="header-sub">HTML, CSS, JavaScript — вёрстка и фронтенд. Быстро, чисто, адаптивно.</p>
+    <div class="header-links">
+      <a class="link-btn link-github" href="https://github.com/seregakuhar-commits" target="_blank">
+        <i data-lucide="github"></i>
+        GitHub
+      </a>
+      <a class="link-btn link-kwork" href="#" title="Скоро">
+        <i data-lucide="briefcase"></i>
+        Kwork (скоро)
+      </a>
     </div>
   </header>
 
-  <div class="projects">
+  <main>
+    <div class="projects">
 
-    <a class="project-card" href="landing/index.html">
-      <div class="project-preview">🏗️</div>
-      <div class="project-body">
-        <span class="project-tag">HTML + CSS</span>
-        <h3>Лендинг строительной компании</h3>
-        <p>Многосекционный лендинг с навигацией, услугами, галереей портфолио и формой контакта.</p>
-        <div class="project-link">Открыть демо →</div>
-      </div>
-    </a>
+      <a class="project-card" href="landing/index.html">
+        <div class="project-preview">
+          <i data-lucide="layout"></i>
+        </div>
+        <div class="project-body">
+          <span class="project-tag">HTML + CSS</span>
+          <h3>Лендинг строительной компании</h3>
+          <p>Многосекционный лендинг с навигацией, услугами, галереей и формой контакта.</p>
+          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
+        </div>
+      </a>
 
-    <a class="project-card" href="calculator/index.html">
-      <div class="project-preview">🧮</div>
-      <div class="project-body">
-        <span class="project-tag">HTML + JS</span>
-        <h3>Калькулятор стоимости ремонта</h3>
-        <p>Интерактивный калькулятор с расчётом в реальном времени. Выбор типа ремонта, ввод площади.</p>
-        <div class="project-link">Открыть демо →</div>
-      </div>
-    </a>
+      <a class="project-card" href="calculator/index.html">
+        <div class="project-preview">
+          <i data-lucide="calculator"></i>
+        </div>
+        <div class="project-body">
+          <span class="project-tag">HTML + JS</span>
+          <h3>Калькулятор стоимости ремонта</h3>
+          <p>Интерактивный расчёт в реальном времени. Ввод площади, выбор типа ремонта.</p>
+          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
+        </div>
+      </a>
 
-    <a class="project-card" href="cards/index.html">
-      <div class="project-preview">✨</div>
-      <div class="project-body">
-        <span class="project-tag">HTML + CSS</span>
-        <h3>Карточки услуг с hover-эффектами</h3>
-        <p>CSS-анимации: поднятие карточки, смена фона, трансформация иконки. Без JS.</p>
-        <div class="project-link">Открыть демо →</div>
-      </div>
-    </a>
+      <a class="project-card" href="cards/index.html">
+        <div class="project-preview">
+          <i data-lucide="mouse-pointer-2"></i>
+        </div>
+        <div class="project-body">
+          <span class="project-tag">HTML + CSS</span>
+          <h3>Карточки услуг с hover-эффектами</h3>
+          <p>CSS-анимации без JS: поднятие карточки, смена фона, трансформация иконки.</p>
+          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
+        </div>
+      </a>
 
-  </div>
+    </div>
+  </main>
 
-  <footer>
-    <p>Сергей · Веб-разработчик</p>
-  </footer>
+  <footer>Сергей · Веб-разработчик</footer>
 
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" integrity="sha384-uTYyvsSSUZeaPhb5RbKlQa0zY/WpX/QHfvg2mczXyBQOpkWPEDy9lczyp+w7SKXu" crossorigin="anonymous"></script>
+  <script>lucide.createIcons();</script>
 </body>
 </html>
