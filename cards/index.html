@@ -3,48 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Услуги — карточки с hover</title>
+  <title>Услуги — СтройМастер</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <header>
-    <h1>Виды строительных работ</h1>
-    <p>Наведите на карточку</p>
+    <div class="header-inner">
+      <p class="header-label">Виды работ</p>
+      <h1>Строительные услуги</h1>
+      <p class="header-sub">Профессиональный ремонт и строительство под ключ</p>
+    </div>
   </header>
 
   <main>
     <div class="cards-grid">
+
       <div class="card">
-        <div class="card-icon">🪣</div>
-        <h3>Штукатурка</h3>
-        <p>Выравнивание стен и потолков. Гипсовые и цементные смеси.</p>
+        <div class="card-icon"><i data-lucide="layers"></i></div>
+        <div class="card-body">
+          <h3>Штукатурка</h3>
+          <p>Выравнивание стен и потолков. Гипсовые и цементные смеси. Механизированное нанесение.</p>
+        </div>
       </div>
+
       <div class="card">
-        <div class="card-icon">🎨</div>
-        <h3>Покраска</h3>
-        <p>Водоэмульсионные и акриловые краски. Любые цвета по RAL.</p>
+        <div class="card-icon"><i data-lucide="paintbrush"></i></div>
+        <div class="card-body">
+          <h3>Покраска</h3>
+          <p>Водоэмульсионные и акриловые краски. Любые цвета по RAL. Колеровка на объекте.</p>
+        </div>
       </div>
+
       <div class="card">
-        <div class="card-icon">🔲</div>
-        <h3>Укладка плитки</h3>
-        <p>Настенная и напольная плитка. Керамика, керамогранит, мозаика.</p>
+        <div class="card-icon"><i data-lucide="layout-grid"></i></div>
+        <div class="card-body">
+          <h3>Укладка плитки</h3>
+          <p>Настенная и напольная плитка. Керамика, керамогранит, мозаика. Гарантия 5 лет.</p>
+        </div>
       </div>
+
       <div class="card">
-        <div class="card-icon">📐</div>
-        <h3>Гипсокартон</h3>
-        <p>Перегородки, потолки, ниши. Монтаж каркаса и обшивка.</p>
+        <div class="card-icon"><i data-lucide="columns-2"></i></div>
+        <div class="card-body">
+          <h3>Гипсокартон</h3>
+          <p>Перегородки, подвесные потолки, ниши. Монтаж металлокаркаса и обшивка.</p>
+        </div>
       </div>
+
       <div class="card">
-        <div class="card-icon">⚡</div>
-        <h3>Электрика</h3>
-        <p>Разводка кабеля, установка розеток, щитки. Допуск СРО.</p>
+        <div class="card-icon"><i data-lucide="zap"></i></div>
+        <div class="card-body">
+          <h3>Электрика</h3>
+          <p>Разводка кабеля, установка розеток и щитков. Допуск СРО. Соответствие ПУЭ.</p>
+        </div>
       </div>
+
       <div class="card">
-        <div class="card-icon">🔧</div>
-        <h3>Сантехника</h3>
-        <p>Монтаж труб, установка сантехники, подключение оборудования.</p>
+        <div class="card-icon"><i data-lucide="droplets"></i></div>
+        <div class="card-body">
+          <h3>Сантехника</h3>
+          <p>Монтаж труб, установка сантехники, подключение оборудования. Опрессовка системы.</p>
+        </div>
       </div>
+
     </div>
   </main>
 
@@ -52,5 +74,7 @@
     Демо-проект · <a href="../index.html">← Портфолио</a>
   </footer>
 
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" integrity="sha384-uTYyvsSSUZeaPhb5RbKlQa0zY/WpX/QHfvg2mczXyBQOpkWPEDy9lczyp+w7SKXu" crossorigin="anonymous"></script>
+  <script>lucide.createIcons();</script>
 </body>
 </html>
