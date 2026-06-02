@@ -131,10 +131,24 @@ section { padding: 5rem 2rem; }
 }
 
 .service-icon {
-  font-size: 2.8rem;
-  display: block;
-  margin-bottom: 1rem;
+  width: 52px;
+  height: 52px;
+  background: var(--dark);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  transition: background 0.25s;
 }
+
+.service-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--white);
+}
+
+.service-card:hover .service-icon { background: var(--orange); }
 
 .service-card h3 {
   font-size: 1.2rem;
