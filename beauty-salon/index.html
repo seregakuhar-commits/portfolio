@@ -117,6 +117,69 @@
     .btn-gold:hover {
       background: var(--gold-dark);
     }
+
+    /* ─── О САЛОНЕ + УСЛУГИ ─── */
+    .about-services {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-services .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about h2 {
+      font-size: 2rem;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+
+    .about p {
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .services h2 {
+      font-size: 2rem;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    .service-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .service-item:last-child {
+      border-bottom: none;
+    }
+
+    .service-name {
+      font-size: 0.95rem;
+      color: var(--white);
+    }
+
+    .service-price {
+      font-size: 0.85rem;
+      color: var(--gold);
+      font-weight: 600;
+      white-space: nowrap;
+      margin-left: 1rem;
+    }
+
+    @media (max-width: 700px) {
+      .about-services .container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -127,6 +190,40 @@
     <h1>Искусство<br>красоты</h1>
     <p class="hero-sub">Профессиональный уход &middot; Москва</p>
     <a class="btn-gold" href="https://t.me/">Записаться</a>
+  </section>
+
+  <!-- О САЛОНЕ + УСЛУГИ -->
+  <section class="about-services">
+    <div class="container">
+
+      <div class="about">
+        <p class="label">О нас</p>
+        <h2>Красота — наша профессия</h2>
+        <p>Studio Noir — это место, где каждая деталь продумана. Работаем с профессиональной косметикой, следим за трендами и создаём образы, которые подчёркивают вашу индивидуальность. Принимаем по записи — никакой спешки.</p>
+      </div>
+
+      <div class="services">
+        <p class="label">Услуги и цены</p>
+        <h2>Что мы делаем</h2>
+        <div class="service-item">
+          <span class="service-name">Стрижка</span>
+          <span class="service-price">от 2 000 ₽</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Окрашивание</span>
+          <span class="service-price">от 4 500 ₽</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Укладка</span>
+          <span class="service-price">от 1 500 ₽</span>
+        </div>
+        <div class="service-item">
+          <span class="service-name">Уход за волосами</span>
+          <span class="service-price">от 2 500 ₽</span>
+        </div>
+      </div>
+
+    </div>
   </section>
 
   <script>
