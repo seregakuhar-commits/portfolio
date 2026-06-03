@@ -295,6 +295,18 @@
       font-size: 0.75rem;
       border-top: 1px solid var(--border);
     }
+
+    /* ─── АНИМАЦИЯ ПОЯВЛЕНИЯ ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -308,7 +320,7 @@
   </section>
 
   <!-- О САЛОНЕ + УСЛУГИ -->
-  <section class="about-services">
+  <section class="about-services reveal">
     <div class="container">
 
       <div class="about">
@@ -342,7 +354,7 @@
   </section>
 
   <!-- ГАЛЕРЕЯ -->
-  <section class="gallery">
+  <section class="gallery reveal">
     <div class="container">
       <div class="gallery-header">
         <p class="label">Портфолио</p>
@@ -360,7 +372,7 @@
   </section>
 
   <!-- TELEGRAM CTA -->
-  <section class="cta">
+  <section class="cta reveal">
     <div class="container">
       <p class="label">Запись</p>
       <h2>Запишитесь прямо сейчас</h2>
@@ -380,7 +392,19 @@
   </footer>
 
   <script>
-    // JS будет добавлен в Task 6
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
   </script>
 </body>
 </html>
