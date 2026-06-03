@@ -239,6 +239,48 @@
       line-height: 1.7;
     }
 
+    /* ─── ПРОЕКТЫ ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.25rem;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+    }
+
+    .project-title {
+      font-size: 0.95rem;
+      color: var(--white);
+      font-family: system-ui, sans-serif;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .project-stack {
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.65rem;
+    }
+
+    .project-desc {
+      font-size: 0.82rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
     /* ─── LAYOUT ─── */
     .cv-layout {
       display: flex;
@@ -358,7 +400,40 @@
         </div>
       </div>
 
-      <!-- Образование и проекты — Task 5 -->
+      <div class="section reveal">
+        <span class="label">Обучение</span>
+        <h2 class="section-title">Образование</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <p class="timeline-period">2017 — 2021</p>
+            <p class="timeline-title">Бакалавр прикладной математики</p>
+            <p class="timeline-company">МГУ им. М.В. Ломоносова, факультет ВМК</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section reveal">
+        <span class="label">Работы</span>
+        <h2 class="section-title">Проекты</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <p class="project-title">E-commerce UI</p>
+            <p class="project-stack">React · CSS Modules</p>
+            <p class="project-desc">Интернет-магазин одежды: каталог с фильтрами, корзина, оформление заказа.</p>
+          </div>
+          <div class="project-card">
+            <p class="project-title">Analytics Dashboard</p>
+            <p class="project-stack">Vanilla JS · SVG</p>
+            <p class="project-desc">Аналитический дашборд с графиками на чистом SVG без библиотек.</p>
+          </div>
+          <div class="project-card">
+            <p class="project-title">Portfolio Site</p>
+            <p class="project-stack">HTML · CSS</p>
+            <p class="project-desc">Портфолио-сайт фотографа с галереей и формой обратной связи.</p>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 
