@@ -52,6 +52,64 @@
       display: block;
     }
 
+    /* ─── САЙДБАР ─── */
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Georgia, serif;
+      font-size: 1.5rem;
+      margin: 0 auto 1.25rem;
+    }
+
+    .sidebar-name {
+      text-align: center;
+      margin-bottom: 0.25rem;
+      font-size: 1.3rem;
+      color: var(--white);
+    }
+
+    .sidebar-title {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 1.75rem;
+    }
+
+    .contact-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.82rem;
+      color: var(--gray);
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-item svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--gold);
+      flex-shrink: 0;
+    }
+
     /* ─── LAYOUT ─── */
     .cv-layout {
       display: flex;
@@ -90,7 +148,32 @@
 <body>
   <div class="cv-layout">
     <aside class="sidebar">
-      <!-- Сайдбар — Tasks 2, 3 -->
+      <div class="avatar">АБ</div>
+      <h1 class="sidebar-name">Александра Белова</h1>
+      <p class="sidebar-title">Frontend-разработчик</p>
+      <hr class="sidebar-divider">
+
+      <span class="label">Контакты</span>
+      <ul class="contact-list">
+        <li class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          a.belova@mail.ru
+        </li>
+        <li class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          +7 (999) 123-45-67
+        </li>
+        <li class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/></svg>
+          @a_belova
+        </li>
+        <li class="contact-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Москва
+        </li>
+      </ul>
+
+      <!-- Навыки и языки — Task 3 -->
     </aside>
     <main class="main">
       <!-- Основной контент — Tasks 4, 5 -->
