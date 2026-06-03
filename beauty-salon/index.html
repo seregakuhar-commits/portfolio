@@ -64,11 +64,70 @@
       color: var(--gold);
       margin-bottom: 0.75rem;
     }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-logo {
+      font-family: Georgia, serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: var(--gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+
+    .btn-gold {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--bg);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.9rem 2.5rem;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-dark);
+    }
   </style>
 </head>
 <body>
 
-  <!-- Секции будут добавляться сюда -->
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-logo">Studio Noir</p>
+    <h1>Искусство<br>красоты</h1>
+    <p class="hero-sub">Профессиональный уход &middot; Москва</p>
+    <a class="btn-gold" href="https://t.me/">Записаться</a>
+  </section>
 
   <script>
     // JS будет добавлен в Task 6
