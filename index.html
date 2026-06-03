@@ -203,6 +203,65 @@
       gap: 0.3rem;
     }
 
+    /* ABOUT BLOCK */
+    .about-block {
+      margin-top: 2.5rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .about-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--orange);
+      margin-bottom: 0.5rem;
+    }
+
+    .about-text p:last-child {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .about-contacts {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--dark);
+      color: var(--white);
+      padding: 0.65rem 1.4rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .contact-btn:hover { background: var(--orange); color: var(--dark); }
+    .contact-btn svg { width: 16px; height: 16px; stroke: currentColor; }
+
+    .price-tag {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
     /* FOOTER */
     footer {
       background: var(--dark);
@@ -212,8 +271,12 @@
       font-size: 0.85rem;
     }
 
+    footer a { color: var(--orange); text-decoration: none; }
+
     @media (max-width: 700px) {
       .projects { grid-template-columns: repeat(2, 1fr); }
+      .about-block { flex-direction: column; align-items: flex-start; }
+      .about-contacts { align-items: flex-start; }
     }
 
     @media (max-width: 480px) {
@@ -279,9 +342,24 @@
       </a>
 
     </div>
+
+    <div class="about-block">
+      <div class="about-text">
+        <p class="about-label">О разработчике</p>
+        <p>Начинающий разработчик с реальными проектами в портфолио. Беру немного, делаю качественно — строю репутацию на результате.</p>
+      </div>
+      <div class="about-contacts">
+        <a class="contact-btn" href="https://t.me/SeregaKuhar" target="_blank">
+          <i data-lucide="send"></i>
+          @SeregaKuhar
+        </a>
+        <span class="price-tag">Лендинг от 4 500 ₽</span>
+      </div>
+    </div>
+
   </main>
 
-  <footer>Сергей · Веб-разработчик</footer>
+  <footer>Сергей · Веб-разработчик · <a href="https://t.me/SeregaKuhar" target="_blank">@SeregaKuhar</a></footer>
 
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" integrity="sha384-uTYyvsSSUZeaPhb5RbKlQa0zY/WpX/QHfvg2mczXyBQOpkWPEDy9lczyp+w7SKXu" crossorigin="anonymous"></script>
   <script>lucide.createIcons();</script>
