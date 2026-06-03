@@ -314,6 +314,18 @@
         padding: 2rem 1.25rem;
       }
     }
+
+    /* ─── АНИМАЦИЯ ПОЯВЛЕНИЯ ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -438,7 +450,19 @@
   </div>
 
   <script>
-    // JS — Task 6
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
   </script>
 </body>
 </html>
