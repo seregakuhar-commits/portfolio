@@ -163,6 +163,21 @@
     .product-price { font-size: 15px; font-weight: 700; color: var(--orange); margin-bottom: 2px; }
     .product-sales { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
     .product-actions { display: flex; gap: 8px; }
+
+    /* SETTINGS */
+    .settings-card { max-width: 520px; }
+    .form-group { margin-bottom: 18px; }
+    .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+    .form-input, .form-select {
+      width: 100%; padding: 8px 12px; border: 1px solid var(--border);
+      border-radius: var(--radius); font-size: 14px; color: var(--text);
+      background: var(--white); outline: none; transition: border-color 0.15s;
+      font-family: inherit;
+    }
+    .form-input:focus, .form-select:focus { border-color: var(--navy); }
+    .form-check { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; }
+    .form-check input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--navy); }
+    .settings-divider { height: 1px; background: var(--border); margin: 24px 0; }
   </style>
 </head>
 <body>
@@ -341,7 +356,50 @@
         <tbody id="clients-tbody"></tbody>
       </table>
     </div></section>
-      <section id="settings" class="section"><!-- SETTINGS --></section>
+      <section id="settings" class="section"><div class="page-header">
+      <h1 class="page-title">Настройки</h1>
+      <p class="page-sub">Параметры системы</p>
+    </div>
+    <div class="card settings-card">
+      <div class="form-group">
+        <label class="form-label">Название магазина</label>
+        <input class="form-input" type="text" value="Мой магазин">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email для уведомлений</label>
+        <input class="form-input" type="email" value="admin@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Валюта</label>
+        <select class="form-select">
+          <option selected>₽ — Российский рубль</option>
+          <option>$ — Доллар США</option>
+          <option>€ — Евро</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Язык интерфейса</label>
+        <select class="form-select">
+          <option selected>Русский</option>
+          <option>English</option>
+        </select>
+      </div>
+      <div class="settings-divider"></div>
+      <div class="form-group">
+        <label class="form-check">
+          <input type="checkbox" checked>
+          Уведомления о новых заказах
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-check">
+          <input type="checkbox">
+          Ежедневный отчёт на email
+        </label>
+      </div>
+      <div class="settings-divider"></div>
+      <button class="btn btn-primary btn-save">Сохранить изменения</button>
+    </div></section>
     </main>
   </div>
   <div id="toast" class="toast"></div>
@@ -363,7 +421,15 @@
       btn.classList.add('active');
       renderOrders(btn.dataset.filter);
     });
-    // TOAST
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+    document.querySelector('.btn-save').addEventListener('click', () => showToast('Настройки сохранены ✓'));
+
     const ORDERS = [
       { id:'#1042', client:'Анна Смирнова',    product:'Подписка Pro',    amount:'2 490 ₽', status:'done',   date:'03.06.2026' },
       { id:'#1041', client:'Иван Петров',       product:'Консультация',    amount:'1 200 ₽', status:'new',    date:'03.06.2026' },
