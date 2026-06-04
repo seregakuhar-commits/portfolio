@@ -150,6 +150,9 @@
     .bar:hover, .bar.hi { background: var(--orange); }
     .bar-day { font-size: 10px; color: var(--muted); }
     .section-label { font-size: 14px; font-weight: 600; color: var(--navy); padding: 16px 16px 12px; }
+
+    /* ORDERS */
+    .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; }
   </style>
 </head>
 <body>
@@ -293,7 +296,24 @@
           </div>
         </div>
       </section>
-      <section id="orders" class="section"><!-- ORDERS --></section>
+      <section id="orders" class="section"><div class="page-header">
+      <h1 class="page-title">Заказы</h1>
+      <p class="page-sub">Все заказы за последние 60 дней</p>
+    </div>
+    <div class="filter-bar">
+      <button class="btn btn-outline active" data-filter="all">Все</button>
+      <button class="btn btn-outline" data-filter="new">Новые</button>
+      <button class="btn btn-outline" data-filter="done">Выполненные</button>
+      <button class="btn btn-outline" data-filter="cancel">Отменённые</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>№</th><th>Клиент</th><th>Товар</th><th>Сумма</th><th>Статус</th><th>Дата</th></tr>
+        </thead>
+        <tbody id="orders-tbody"></tbody>
+      </table>
+    </div></section>
       <section id="products" class="section"><!-- PRODUCTS --></section>
       <section id="clients" class="section"><!-- CLIENTS --></section>
       <section id="settings" class="section"><!-- SETTINGS --></section>
@@ -311,9 +331,83 @@
       });
     });
 
-    // FILTER
+    document.querySelector('.filter-bar')?.addEventListener('click', e => {
+      const btn = e.target.closest('[data-filter]');
+      if (!btn) return;
+      document.querySelectorAll('.filter-bar .btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderOrders(btn.dataset.filter);
+    });
     // TOAST
-    // RENDER
+    const ORDERS = [
+      { id:'#1042', client:'Анна Смирнова',    product:'Подписка Pro',    amount:'2 490 ₽', status:'done',   date:'03.06.2026' },
+      { id:'#1041', client:'Иван Петров',       product:'Консультация',    amount:'1 200 ₽', status:'new',    date:'03.06.2026' },
+      { id:'#1040', client:'Мария Козлова',     product:'Подписка Base',   amount:'990 ₽',   status:'done',   date:'02.06.2026' },
+      { id:'#1039', client:'Дмитрий Новиков',   product:'Подписка Pro',    amount:'2 490 ₽', status:'cancel', date:'02.06.2026' },
+      { id:'#1038', client:'Ольга Фёдорова',    product:'Разовый доступ',  amount:'490 ₽',   status:'new',    date:'01.06.2026' },
+      { id:'#1037', client:'Алексей Морозов',   product:'Консультация',    amount:'1 200 ₽', status:'done',   date:'01.06.2026' },
+      { id:'#1036', client:'Наталья Волкова',   product:'Подписка Base',   amount:'990 ₽',   status:'new',    date:'31.05.2026' },
+      { id:'#1035', client:'Сергей Лебедев',    product:'Подписка Pro',    amount:'2 490 ₽', status:'done',   date:'31.05.2026' },
+      { id:'#1034', client:'Татьяна Соколова',  product:'Разовый доступ',  amount:'490 ₽',   status:'cancel', date:'30.05.2026' },
+      { id:'#1033', client:'Михаил Попов',      product:'Консультация',    amount:'1 200 ₽', status:'done',   date:'30.05.2026' },
+    ];
+    const STATUS_LABEL = { new: 'Новый', done: 'Выполнен', cancel: 'Отменён' };
+    function renderOrders(filter) {
+      const rows = ORDERS.filter(o => filter === 'all' || o.status === filter);
+      document.getElementById('orders-tbody').innerHTML = rows.map(o =>
+        `<tr data-status="${o.status}">
+          <td>${o.id}</td><td>${o.client}</td><td>${o.product}</td>
+          <td><strong>${o.amount}</strong></td>
+          <td><span class="badge badge-${o.status}">${STATUS_LABEL[o.status]}</span></td>
+          <td style="color:var(--muted)">${o.date}</td>
+        </tr>`
+      ).join('');
+    }
+    renderOrders('all');
+
+    const PRODUCTS = [
+      { name:'Подписка Base',  price:'990 ₽/мес',    color:'#e8f4f8', sales:145 },
+      { name:'Подписка Pro',   price:'2 490 ₽/мес',  color:'#fef3e2', sales:89  },
+      { name:'Подписка Team',  price:'6 490 ₽/мес',  color:'#f0f4ff', sales:34  },
+      { name:'Консультация',   price:'1 200 ₽/час',  color:'#f0fff4', sales:67  },
+      { name:'Разовый доступ', price:'490 ₽',         color:'#fff5f5', sales:213 },
+      { name:'Корпоративный',  price:'от 15 000 ₽',   color:'#f5f0ff', sales:12  },
+    ];
+    document.getElementById('products-grid').innerHTML = PRODUCTS.map(p =>
+      `<div class="product-card">
+        <div class="product-img" style="background:${p.color}"></div>
+        <div class="product-body">
+          <div class="product-name">${p.name}</div>
+          <div class="product-price">${p.price}</div>
+          <div class="product-sales">${p.sales} продаж</div>
+          <div class="product-actions">
+            <button class="btn btn-outline" style="font-size:12px;padding:5px 10px">Редактировать</button>
+            <button class="btn btn-outline" style="font-size:12px;padding:5px 10px;color:var(--red);border-color:var(--red)">Удалить</button>
+          </div>
+        </div>
+      </div>`
+    ).join('');
+
+    const CLIENTS = [
+      { ini:'АС', name:'Анна Смирнова',   email:'anna@example.com',   phone:'+7 905 123-45-67', date:'15.01.2025', active:true  },
+      { ini:'ИП', name:'Иван Петров',      email:'ivan@example.com',   phone:'+7 916 234-56-78', date:'22.03.2025', active:true  },
+      { ini:'МК', name:'Мария Козлова',    email:'maria@example.com',  phone:'+7 926 345-67-89', date:'08.04.2025', active:false },
+      { ini:'ДН', name:'Дмитрий Новиков',  email:'dmitry@example.com', phone:'+7 903 456-78-90', date:'19.05.2025', active:true  },
+      { ini:'ОФ', name:'Ольга Фёдорова',   email:'olga@example.com',   phone:'+7 915 567-89-01', date:'02.07.2025', active:true  },
+      { ini:'АМ', name:'Алексей Морозов',  email:'alex@example.com',   phone:'+7 917 678-90-12', date:'14.08.2025', active:false },
+      { ini:'НВ', name:'Наталья Волкова',  email:'natalia@example.com',phone:'+7 925 789-01-23', date:'30.09.2025', active:true  },
+      { ini:'СЛ', name:'Сергей Лебедев',   email:'sergey@example.com', phone:'+7 904 890-12-34', date:'11.10.2025', active:true  },
+    ];
+    document.getElementById('clients-tbody').innerHTML = CLIENTS.map(c =>
+      `<tr>
+        <td><div style="width:30px;height:30px;border-radius:50%;background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600">${c.ini}</div></td>
+        <td><strong>${c.name}</strong></td>
+        <td style="color:var(--muted)">${c.email}</td>
+        <td style="color:var(--muted)">${c.phone}</td>
+        <td style="color:var(--muted)">${c.date}</td>
+        <td><span class="badge ${c.active ? 'badge-active' : 'badge-inactive'}">${c.active ? 'Активен' : 'Неактивен'}</span></td>
+      </tr>`
+    ).join('');
   </script>
 </body>
 </html>
