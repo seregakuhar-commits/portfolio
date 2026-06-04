@@ -1,0 +1,1155 @@
+# NFC Card Landing — Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Создать демо-лендинг `nfc-card/index.html` для бизнеса на NFC-визитках — тёмный стиль, золотые акценты, 5 секций, живая демо-карточка в Hero.
+
+**Architecture:** Единый статический файл с inline CSS и JS, без CDN. Секции последовательно в `<body>`, JS только два блока: IntersectionObserver для подсветки навигации и smooth scroll. Паттерн идентичен `beauty-salon/index.html` и `admin/index.html`.
+
+**Tech Stack:** HTML5, CSS3 (custom properties, grid, flexbox, transitions), Vanilla JS (IntersectionObserver, smooth scroll).
+
+---
+
+## File Map
+
+- **Create:** `nfc-card/index.html` — весь лендинг, все CSS и JS inline
+- **Modify:** `index.html` — добавить карточку «NFC-визитка» в `.projects` grid
+
+---
+
+### Task 1: Skeleton + CSS Variables
+
+**Files:**
+- Create: `nfc-card/index.html`
+
+- [ ] **Step 1: Создать файл**
+
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFC·Card — Цифровые визитки нового поколения</title>
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --gold: #c9a84c;
+      --gold-light: #f5d78e;
+      --text: #ffffff;
+      --text-muted: rgba(255,255,255,0.5);
+      --border: rgba(201,168,76,0.2);
+      --radius: 12px;
+      --topbar-h: 64px;
+      --max-w: 1100px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section { padding: 80px 0; }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+
+  <!-- HERO -->
+
+  <!-- HOW -->
+
+  <!-- FEATURES -->
+
+  <!-- PRICING -->
+
+  <!-- CTA -->
+
+  <!-- FOOTER -->
+
+  <script>
+    // JS
+  </script>
+</body>
+</html>
+```
+
+- [ ] **Step 2: Открыть в браузере**
+
+Открыть `nfc-card/index.html`. Ожидается: пустая тёмная страница (`#0f0f1a`) без ошибок в консоли.
+
+- [ ] **Step 3: Коммит**
+
+```bash
+git add nfc-card/index.html
+git commit -m "feat: nfc card landing skeleton"
+```
+
+---
+
+### Task 2: Header / Nav
+
+**Files:**
+- Modify: `nfc-card/index.html` — добавить CSS перед `</style>`, заменить `<!-- HEADER -->`
+
+- [ ] **Step 1: Добавить CSS хедера перед `</style>`**
+
+```css
+    /* HEADER */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--topbar-h);
+      background: rgba(15,15,26,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .header-logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .header-logo span { color: var(--gold); }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .header-nav a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .header-nav a:hover,
+    .header-nav a.active { color: var(--gold); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-gold { background: var(--gold); color: #0f0f1a; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+    }
+
+    @media (max-width: 640px) {
+      .header-nav { display: none; }
+    }
+```
+
+- [ ] **Step 2: Заменить `<!-- HEADER -->` на HTML**
+
+```html
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a class="header-logo" href="#">NFC<span>·</span>Card</a>
+        <nav>
+          <ul class="header-nav">
+            <li><a href="#how">Как работает</a></li>
+            <li><a href="#features">Возможности</a></li>
+            <li><a href="#pricing">Тарифы</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn-gold" href="#pricing">Заказать</a>
+      </div>
+    </div>
+  </header>
+```
+
+- [ ] **Step 3: Проверить в браузере**
+
+Ожидается: тёмный хедер с логотипом «NFC·Card» (точка золотая), три ссылки nav, золотая кнопка «Заказать». При прокрутке страницы хедер остаётся зафиксированным сверху.
+
+- [ ] **Step 4: Коммит**
+
+```bash
+git add nfc-card/index.html
+git commit -m "feat: nfc card sticky header"
+```
+
+---
+
+### Task 3: Hero — Layout + Text
+
+**Files:**
+- Modify: `nfc-card/index.html`
+
+- [ ] **Step 1: Добавить CSS Hero перед `</style>`**
+
+```css
+    /* HERO */
+    .hero {
+      padding: 100px 0 80px;
+      min-height: calc(100vh - var(--topbar-h));
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 420px;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    .hero-card-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero { padding: 60px 0; }
+      .hero-card-wrap { order: -1; }
+    }
+```
+
+- [ ] **Step 2: Заменить `<!-- HERO -->` на HTML**
+
+```html
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            NFC · QR · Digital
+          </div>
+          <h1>Ваша визитка —<br><em>одно касание</em></h1>
+          <p class="hero-sub">NFC-карточка + цифровая визитка. Поделись контактами за секунду — без приложений, без бумаги.</p>
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="#pricing">Заказать карточку</a>
+            <a class="btn btn-outline" href="#how">Как это работает</a>
+          </div>
+          <p class="hero-note">от 990 ₽ · доставка 3–5 дней</p>
+        </div>
+        <div class="hero-card-wrap">
+          <!-- CARD -->
+        </div>
+      </div>
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Проверить в браузере**
+
+Ожидается: двухколоночный Hero на весь экран. Слева: бейдж «NFC · QR · Digital», крупный заголовок с золотым градиентом на «одно касание», две кнопки (золотая + outline), цена. Справа: пустой placeholder. На мобиле — одна колонка.
+
+- [ ] **Step 4: Коммит**
+
+```bash
+git add nfc-card/index.html
+git commit -m "feat: hero layout and text"
+```
+
+---
+
+### Task 4: Demo Business Card
+
+**Files:**
+- Modify: `nfc-card/index.html` — добавить CSS, заменить `<!-- CARD -->`
+
+- [ ] **Step 1: Добавить CSS карточки перед `</style>`**
+
+```css
+    /* DEMO CARD */
+    .demo-card {
+      width: 340px;
+      height: 214px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #0d0d1a 100%);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .demo-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .demo-card:hover {
+      transform: translateY(-6px) rotate(1deg);
+      box-shadow: 0 20px 60px rgba(201,168,76,0.15);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #0f0f1a;
+      flex-shrink: 0;
+    }
+
+    .card-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .card-title-text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .card-contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .card-contact-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .card-contact-row svg { color: var(--gold); flex-shrink: 0; }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-socials { display: flex; gap: 8px; }
+
+    .card-social {
+      width: 26px; height: 26px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+
+    .card-nfc { color: rgba(201,168,76,0.5); }
+```
+
+- [ ] **Step 2: Заменить `<!-- CARD -->` на HTML карточки**
+
+```html
+          <div class="demo-card">
+            <div class="card-top">
+              <div class="card-avatar">АС</div>
+              <div>
+                <div class="card-name">Александр Соколов</div>
+                <div class="card-title-text">Основатель · TechStart</div>
+              </div>
+            </div>
+            <div class="card-contacts">
+              <div class="card-contact-row">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.85h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.42a16 16 0 0 0 6 6l1.63-1.63a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                +7 999 123-45-67
+              </div>
+              <div class="card-contact-row">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                alex@techstart.ru
+              </div>
+              <div class="card-contact-row">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                techstart.ru
+              </div>
+            </div>
+            <div class="card-bottom">
+              <div class="card-socials">
+                <div class="card-social">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </div>
+                <div class="card-social">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                </div>
+                <div class="card-social">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+              </div>
+              <div class="card-nfc">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg>
+              </div>
+            </div>
+          </div>
+```
+
+- [ ] **Step 3: Проверить в браузере**
+
+Ожидается: в правой колонке Hero — карточка 340×214px. Тёмный градиентный фон, золотые акценты. Содержимое: аватар «АС» (золотой квадрат), имя и должность, три строки контактов с иконками, три иконки соцсетей и NFC-символ. При наведении — подъём на 6px и лёгкий поворот с золотым свечением.
+
+- [ ] **Step 4: Коммит**
+
+```bash
+git add nfc-card/index.html
+git commit -m "feat: demo business card component in hero"
+```
+
+---
+
+### Task 5: Секция «Как это работает»
+
+**Files:**
+- Modify: `nfc-card/index.html`
+
+- [ ] **Step 1: Добавить CSS перед `</style>`**
+
+```css
+    /* HOW IT WORKS */
+    .how { background: var(--surface); }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 3rem;
+    }
+
+    .how-step {
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .how-step:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -0.5rem;
+      top: 44px;
+      font-size: 1.4rem;
+      color: var(--text-muted);
+    }
+
+    .how-num {
+      width: 52px; height: 52px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .how-step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .how-step p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      .how-grid { grid-template-columns: 1fr; }
+      .how-step:not(:last-child)::after {
+        content: '↓';
+        right: auto;
+        top: auto;
+        bottom: -0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+```
+
+- [ ] **Step 2: Заменить `<!-- HOW -->` на HTML**
+
+```html
+  <section class="how" id="how">
+    <div class="container">
+      <p class="section-label">Просто</p>
+      <h2 class="section-title">Три шага до первого касания</h2>
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="how-num">1</div>
+          <h3>Заказываешь карточку</h3>
+          <p>Выбираешь физический дизайн NFC-карточки. Доставим за 3–5 дней</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">2</div>
+          <h3>Настраиваешь визитку</h3>
+          <p>Заполняешь имя, контакты, соцсети в личном кабинете — за 5 минут</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">3</div>
+          <h3>Делишься одним касанием</h3>
+          <p>Прикладываешь телефон — контакты мгновенно переданы. Без приложений</p>
+        </div>
+      </div>
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Проверить в браузере**
+
+Ожидается: секция на `#1a1a2e`. Три колонки: каждая с золотым кружком-цифрой, жирным заголовком, серым описанием. Между колонками стрелки `→`. На мобиле — одна колонка со стрелками `↓`.
+
+- [ ] **Step 4: Коммит**
+
+```bash
+git add nfc-card/index.html
+git commit -m "feat: how it works section"
+```
+
+---
+
+### Task 6: Секция «Возможности»
+
+**Files:**
+- Modify: `nfc-card/index.html`
+
+- [ ] **Step 1: Добавить CSS перед `</style>`**
+
+```css
+    /* FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(201,168,76,0.5);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      width: 44px; height: 44px;
+      background: rgba(201,168,76,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: var(--gold);
+    }
+
+    .feature-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .feature-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .features-grid { grid-template-columns: 1fr; } }
+```
+
+- [ ] **Step 2: Заменить `<!-- FEATURES -->` на HTML**
+
+```html
+  <section id="features">
+    <div class="container">
+      <p class="section-label">Возможности</p>
+      <h2 class="section-title">Всё что нужно — уже внутри</h2>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg>
+          </div>
+          <h3>NFC + QR в одной карточке</h3>
+          <p>Работает с любым телефоном — через касание или сканирование кода</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <h3>Редактируй в любой момент</h3>
+          <p>Сменил номер или должность — обнови визитку без замены карточки</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3>Статистика просмотров</h3>
+          <p>Видишь кто и когда открыл твою визитку — отслеживай эффективность</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+          </div>
+          <h3>Любой дизайн</h3>
+          <p>Цвета, логотип, фото — настрой визитку под свой бренд</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <h3>Без приложений</h3>
+          <p>Получатель просто видит страницу в браузере — ничего устанавливать не нужно</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.21l1.86-.05-.93 1.77a9 9 0 1 0 13.96-10.56C17.79 9.63 17.38 8.87 17 8z"/></svg>
+          </div>
+          <h3>Без бумаги</h3>
+          <p>Одна NFC-карточка заменяет сотни бумажных визиток — экологично</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Проверить в браузере**
+
+Ожидается: 6 карточек в сетке 3×2. Каждая с золотым квадратом-иконкой, белым заголовком, серым описанием. Hover — подъём и золотая рамка.
+
+- [ ] **Step 4: Коммит**
+
+```bash
+git add nfc-card/index.html
+git commit -m "feat: features section with 6 cards"
+```
+
+---
+
+### Task 7: Секция «Тарифы»
+
+**Files:**
+- Modify: `nfc-card/index.html`
+
+- [ ] **Step 1: Добавить CSS перед `</style>`**
+
+```css
+    /* PRICING */
+    .pricing { background: var(--surface); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px rgba(201,168,76,0.3), 0 12px 40px rgba(201,168,76,0.1);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: #0f0f1a;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .pricing-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .pricing-price {
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing-price sup {
+      font-size: 1rem;
+      font-weight: 600;
+      vertical-align: top;
+      margin-top: 0.4rem;
+      display: inline-block;
+    }
+
+    .pricing-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.25rem 0;
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-features li::before {
+      content: '';
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: rgba(201,168,76,0.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23c9a84c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") no-repeat center;
+    }
+
+    .pricing-features li.off { opacity: 0.35; }
+
+    .pricing-features li.off::before {
+      background: rgba(136,136,136,0.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") no-repeat center;
+    }
+
+    .btn-full { width: 100%; justify-content: center; }
+
+    @media (max-width: 768px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+    }
+```
+
+- [ ] **Step 2: Заменить `<!-- PRICING -->` на HTML**
+
+```html
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <p class="section-label">Тарифы</p>
+      <h2 class="section-title">Простые цены</h2>
+      <div class="pricing-grid">
+
+        <div class="pricing-card">
+          <p class="pricing-name">Старт</p>
+          <div class="pricing-price"><sup>₽</sup>990</div>
+          <p class="pricing-desc">Для частных лиц</p>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li>1 NFC-карточка</li>
+            <li>Базовый шаблон</li>
+            <li>Имя, контакты, ссылки</li>
+            <li class="off">Свой дизайн</li>
+            <li class="off">Статистика</li>
+            <li class="off">Приоритетная поддержка</li>
+          </ul>
+          <a class="btn btn-outline btn-full" href="#">Выбрать</a>
+        </div>
+
+        <div class="pricing-card featured">
+          <span class="pricing-badge">Популярный</span>
+          <p class="pricing-name">Бизнес</p>
+          <div class="pricing-price"><sup>₽</sup>1990</div>
+          <p class="pricing-desc">Для предпринимателей</p>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li>1 NFC-карточка</li>
+            <li>Свой дизайн и цвета</li>
+            <li>Имя, контакты, ссылки</li>
+            <li>Логотип и фото</li>
+            <li>Статистика просмотров</li>
+            <li>Приоритетная поддержка</li>
+          </ul>
+          <a class="btn btn-gold btn-full" href="#">Выбрать</a>
+        </div>
+
+        <div class="pricing-card">
+          <p class="pricing-name">Команда</p>
+          <div class="pricing-price"><sup>₽</sup>4900</div>
+          <p class="pricing-desc">До 10 сотрудников</p>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li>10 NFC-карточек</li>
+            <li>Корпоративный стиль</li>
+            <li>Единый бренд-кит</li>
+            <li>Управление командой</li>
+            <li>Статистика по каждому</li>
+            <li>Выделенный менеджер</li>
+          </ul>
+          <a class="btn btn-outline btn-full" href="#">Выбрать</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Проверить в браузере**
+
+Ожидается: три карточки тарифов. Средняя («Бизнес») с золотой рамкой, двойной тенью и бейджем «Популярный». Недоступные пункты — серые с крестиком. Кнопки: крайние outline, средняя золотая.
+
+- [ ] **Step 4: Коммит**
+
+```bash
+git add nfc-card/index.html
+git commit -m "feat: pricing section with 3 plans"
+```
+
+---
+
+### Task 8: CTA + Footer
+
+**Files:**
+- Modify: `nfc-card/index.html`
+
+- [ ] **Step 1: Добавить CSS перед `</style>`**
+
+```css
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-top: 3px solid var(--gold);
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 50% -20%, rgba(201,168,76,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta-section .container { position: relative; }
+
+    .cta-section h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    .cta-section > .container > p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 460px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+
+    .cta-note {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    footer span { color: var(--gold); }
+```
+
+- [ ] **Step 2: Заменить `<!-- CTA -->` на HTML**
+
+```html
+  <section class="cta-section">
+    <div class="container">
+      <h2>Готов выделиться?</h2>
+      <p>Закажи NFC-карточку сегодня — первыми контактами поделишься уже через неделю</p>
+      <a class="btn btn-gold" href="#pricing" style="font-size:1rem;padding:0.8rem 2rem;">Заказать сейчас</a>
+      <p class="cta-note">Бесплатная доставка при заказе от 1 990 ₽</p>
+    </div>
+  </section>
+```
+
+- [ ] **Step 3: Заменить `<!-- FOOTER -->` на HTML**
+
+```html
+  <footer>
+    © 2024 NFC<span>·</span>Card · <span>Цифровые визитки нового поколения</span>
+  </footer>
+```
+
+- [ ] **Step 4: Проверить в браузере**
+
+Ожидается: финальная секция с золотой полосой сверху, радиальное свечение позади. Крупный заголовок, описание, большая золотая кнопка, примечание о доставке. Тёмный футер с золотыми акцентами ниже.
+
+- [ ] **Step 5: Коммит**
+
+```bash
+git add nfc-card/index.html
+git commit -m "feat: cta section and footer"
+```
+
+---
+
+### Task 9: JS — Smooth Scroll + Active Nav
+
+**Files:**
+- Modify: `nfc-card/index.html` — заменить `// JS` внутри `<script>`
+
+- [ ] **Step 1: Заменить `// JS` на код**
+
+```js
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const navLinks = document.querySelectorAll('.header-nav a[href^="#"]');
+    const sections = document.querySelectorAll('section[id]');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const link = document.querySelector(`.header-nav a[href="#${entry.target.id}"]`);
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+```
+
+- [ ] **Step 2: Проверить в браузере**
+
+Ожидается:
+1. Клик по «Как работает» — страница плавно скроллится к `#how`
+2. При прокрутке к секции — нужная ссылка в хедере подсвечивается золотом
+3. Кнопки «Заказать карточку» и «Как это работает» в Hero — плавная прокрутка к `#pricing` и `#how`
+
+- [ ] **Step 3: Коммит**
+
+```bash
+git add nfc-card/index.html
+git commit -m "feat: smooth scroll and active nav highlight"
+```
+
+---
+
+### Task 10: Карточка в портфолио
+
+**Files:**
+- Modify: `index.html` — добавить карточку после блока `admin`
+
+- [ ] **Step 1: Найти closing `</a>` блока admin в `index.html`**
+
+Найти строку (это конец карточки admin):
+```html
+      </a>
+
+    </div>
+```
+
+- [ ] **Step 2: Вставить карточку NFC перед `</div>` (закрывающий тег `.projects`)**
+
+```html
+      <a class="project-card" href="nfc-card/index.html" target="_blank">
+        <div class="project-preview">
+          <i data-lucide="credit-card"></i>
+        </div>
+        <div class="project-body">
+          <span class="project-tag">HTML + CSS + JS</span>
+          <h3>NFC-визитка</h3>
+          <p>Лендинг для бизнеса на цифровых NFC-визитках. Тёмный стиль, живая демо-карточка, тарифы.</p>
+          <span class="project-price">от 6 000 ₽</span>
+          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
+        </div>
+      </a>
+```
+
+- [ ] **Step 3: Проверить в браузере**
+
+Открыть `index.html`. Ожидается: карточка «NFC-визитка» с иконкой `credit-card` появляется в сетке проектов после «Админ-панель». При наведении иконка становится оранжевой.
+
+- [ ] **Step 4: Коммит**
+
+```bash
+git add nfc-card/index.html index.html
+git commit -m "feat: add nfc card landing and portfolio card"
+```
