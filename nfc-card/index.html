@@ -125,6 +125,91 @@
     @media (max-width: 640px) {
       .header-nav { display: none; }
     }
+
+    /* HERO */
+    .hero {
+      padding: 100px 0 80px;
+      min-height: calc(100vh - var(--topbar-h));
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 420px;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    .hero-card-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero { padding: 60px 0; }
+      .hero-card-wrap { order: -1; }
+    }
   </style>
 </head>
 <body>
@@ -145,7 +230,28 @@
     </div>
   </header>
 
-  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            NFC · QR · Digital
+          </div>
+          <h1>Ваша визитка —<br><em>одно касание</em></h1>
+          <p class="hero-sub">NFC-карточка + цифровая визитка. Поделись контактами за секунду — без приложений, без бумаги.</p>
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="#pricing">Заказать карточку</a>
+            <a class="btn btn-outline" href="#how">Как это работает</a>
+          </div>
+          <p class="hero-note">от 990 ₽ · доставка 3–5 дней</p>
+        </div>
+        <div class="hero-card-wrap">
+          <!-- CARD -->
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- HOW -->
 
