@@ -415,6 +415,119 @@
 
     @media (max-width: 768px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 480px) { .features-grid { grid-template-columns: 1fr; } }
+
+    /* PRICING */
+    .pricing { background: var(--surface); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px rgba(201,168,76,0.3), 0 12px 40px rgba(201,168,76,0.1);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: #0f0f1a;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .pricing-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .pricing-price {
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing-price sup {
+      font-size: 1rem;
+      font-weight: 600;
+      vertical-align: top;
+      margin-top: 0.4rem;
+      display: inline-block;
+    }
+
+    .pricing-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.25rem 0;
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-features li::before {
+      content: '';
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: rgba(201,168,76,0.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23c9a84c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") no-repeat center;
+    }
+
+    .pricing-features li.off { opacity: 0.35; }
+
+    .pricing-features li.off::before {
+      background: rgba(136,136,136,0.15) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") no-repeat center;
+    }
+
+    .btn-full { width: 100%; justify-content: center; }
+
+    @media (max-width: 768px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+    }
   </style>
 </head>
 <body>
@@ -578,7 +691,64 @@
     </div>
   </section>
 
-  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <p class="section-label">Тарифы</p>
+      <h2 class="section-title">Простые цены</h2>
+      <div class="pricing-grid">
+
+        <div class="pricing-card">
+          <p class="pricing-name">Старт</p>
+          <div class="pricing-price"><sup>₽</sup>990</div>
+          <p class="pricing-desc">Для частных лиц</p>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li>1 NFC-карточка</li>
+            <li>Базовый шаблон</li>
+            <li>Имя, контакты, ссылки</li>
+            <li class="off">Свой дизайн</li>
+            <li class="off">Статистика</li>
+            <li class="off">Приоритетная поддержка</li>
+          </ul>
+          <a class="btn btn-outline btn-full" href="#">Выбрать</a>
+        </div>
+
+        <div class="pricing-card featured">
+          <span class="pricing-badge">Популярный</span>
+          <p class="pricing-name">Бизнес</p>
+          <div class="pricing-price"><sup>₽</sup>1990</div>
+          <p class="pricing-desc">Для предпринимателей</p>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li>1 NFC-карточка</li>
+            <li>Свой дизайн и цвета</li>
+            <li>Имя, контакты, ссылки</li>
+            <li>Логотип и фото</li>
+            <li>Статистика просмотров</li>
+            <li>Приоритетная поддержка</li>
+          </ul>
+          <a class="btn btn-gold btn-full" href="#">Выбрать</a>
+        </div>
+
+        <div class="pricing-card">
+          <p class="pricing-name">Команда</p>
+          <div class="pricing-price"><sup>₽</sup>4900</div>
+          <p class="pricing-desc">До 10 сотрудников</p>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li>10 NFC-карточек</li>
+            <li>Корпоративный стиль</li>
+            <li>Единый бренд-кит</li>
+            <li>Управление командой</li>
+            <li>Статистика по каждому</li>
+            <li>Выделенный менеджер</li>
+          </ul>
+          <a class="btn btn-outline btn-full" href="#">Выбрать</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <!-- CTA -->
 
