@@ -307,6 +307,67 @@
     }
 
     .card-nfc { color: rgba(201,168,76,0.5); }
+
+    /* HOW IT WORKS */
+    .how { background: var(--surface); }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 3rem;
+    }
+
+    .how-step {
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .how-step:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -0.5rem;
+      top: 44px;
+      font-size: 1.4rem;
+      color: var(--text-muted);
+    }
+
+    .how-num {
+      width: 52px; height: 52px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .how-step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .how-step p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      .how-grid { grid-template-columns: 1fr; }
+      .how-step:not(:last-child)::after {
+        content: '↓';
+        right: auto;
+        top: auto;
+        bottom: -0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
   </style>
 </head>
 <body>
@@ -388,7 +449,29 @@
     </div>
   </section>
 
-  <!-- HOW -->
+  <section class="how" id="how">
+    <div class="container">
+      <p class="section-label">Просто</p>
+      <h2 class="section-title">Три шага до первого касания</h2>
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="how-num">1</div>
+          <h3>Заказываешь карточку</h3>
+          <p>Выбираешь физический дизайн NFC-карточки. Доставим за 3–5 дней</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">2</div>
+          <h3>Настраиваешь визитку</h3>
+          <p>Заполняешь имя, контакты, соцсети в личном кабинете — за 5 минут</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">3</div>
+          <h3>Делишься одним касанием</h3>
+          <p>Прикладываешь телефон — контакты мгновенно переданы. Без приложений</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- FEATURES -->
 
