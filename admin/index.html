@@ -140,6 +140,16 @@
     .stat-icon.c-green  { background: #f0fff4; color: var(--green); }
     .stat-icon.c-navy   { background: rgba(26,35,50,0.07); color: var(--navy); }
     .stat-icon.c-purple { background: #f5f0ff; color: var(--purple); }
+
+    /* DASHBOARD — CHART + LAST ORDERS */
+    .dash-row { display: grid; grid-template-columns: 1fr 1.6fr; gap: 16px; }
+    .chart-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 16px; }
+    .chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 100px; }
+    .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; height: 100%; justify-content: flex-end; }
+    .bar { width: 100%; background: var(--border); border-radius: 3px 3px 0 0; transition: background 0.2s; min-height: 4px; }
+    .bar:hover, .bar.hi { background: var(--orange); }
+    .bar-day { font-size: 10px; color: var(--muted); }
+    .section-label { font-size: 14px; font-weight: 600; color: var(--navy); padding: 16px 16px 12px; }
   </style>
 </head>
 <body>
@@ -255,7 +265,33 @@
             </div>
           </div>
         </div>
-        <!-- DASHBOARD-BOTTOM -->
+        <div class="dash-row">
+          <div class="card">
+            <div class="chart-title">Активность за 7 дней</div>
+            <div class="chart-bars">
+              <div class="bar-wrap"><div class="bar" style="height:42%"></div><span class="bar-day">Пн</span></div>
+              <div class="bar-wrap"><div class="bar" style="height:68%"></div><span class="bar-day">Вт</span></div>
+              <div class="bar-wrap"><div class="bar" style="height:55%"></div><span class="bar-day">Ср</span></div>
+              <div class="bar-wrap"><div class="bar" style="height:82%"></div><span class="bar-day">Чт</span></div>
+              <div class="bar-wrap"><div class="bar" style="height:74%"></div><span class="bar-day">Пт</span></div>
+              <div class="bar-wrap"><div class="bar hi" style="height:93%"></div><span class="bar-day">Сб</span></div>
+              <div class="bar-wrap"><div class="bar" style="height:71%"></div><span class="bar-day">Вс</span></div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <div class="section-label">Последние заказы</div>
+            <table>
+              <thead><tr><th>№</th><th>Клиент</th><th>Сумма</th><th>Статус</th></tr></thead>
+              <tbody>
+                <tr><td>#1042</td><td>Анна Смирнова</td><td>2 490 ₽</td><td><span class="badge badge-done">Выполнен</span></td></tr>
+                <tr><td>#1041</td><td>Иван Петров</td><td>1 200 ₽</td><td><span class="badge badge-new">Новый</span></td></tr>
+                <tr><td>#1040</td><td>Мария Козлова</td><td>990 ₽</td><td><span class="badge badge-done">Выполнен</span></td></tr>
+                <tr><td>#1039</td><td>Дмитрий Новиков</td><td>2 490 ₽</td><td><span class="badge badge-cancel">Отменён</span></td></tr>
+                <tr><td>#1038</td><td>Ольга Фёдорова</td><td>490 ₽</td><td><span class="badge badge-new">Новый</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
       <section id="orders" class="section"><!-- ORDERS --></section>
       <section id="products" class="section"><!-- PRODUCTS --></section>
