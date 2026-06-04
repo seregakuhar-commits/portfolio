@@ -121,6 +121,25 @@
       opacity: 0; transition: opacity 0.15s; z-index: 200;
     }
     .nav-item:hover .nav-tooltip { opacity: 1; }
+
+    /* DASHBOARD — STAT CARDS */
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-card {
+      background: var(--white); border-radius: var(--radius); padding: 20px;
+      box-shadow: var(--shadow); border-top: 3px solid var(--orange);
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .stat-value { font-size: 26px; font-weight: 700; color: var(--navy); line-height: 1; }
+    .stat-change { font-size: 11px; margin-top: 6px; }
+    .stat-change.up { color: var(--green); }
+    .stat-change.down { color: var(--red); }
+    .stat-icon { width: 40px; height: 40px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .stat-icon svg { width: 18px; height: 18px; }
+    .stat-icon.c-orange { background: #fff8e1; color: var(--orange); }
+    .stat-icon.c-green  { background: #f0fff4; color: var(--green); }
+    .stat-icon.c-navy   { background: rgba(26,35,50,0.07); color: var(--navy); }
+    .stat-icon.c-purple { background: #f5f0ff; color: var(--purple); }
   </style>
 </head>
 <body>
@@ -176,7 +195,68 @@
       </div>
     </nav>
     <main class="main">
-      <section id="dashboard" class="section active"><!-- DASHBOARD --></section>
+      <section id="dashboard" class="section active">
+        <div class="page-header">
+          <h1 class="page-title">Дашборд</h1>
+          <p class="page-sub">Обзор за последние 30 дней</p>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Заказы</div>
+              <div class="stat-value">1 284</div>
+              <div class="stat-change up">↑ 12% к прошлому месяцу</div>
+            </div>
+            <div class="stat-icon c-orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Выручка</div>
+              <div class="stat-value">284 500 ₽</div>
+              <div class="stat-change up">↑ 8% к прошлому месяцу</div>
+            </div>
+            <div class="stat-icon c-green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                <polyline points="17 6 23 6 23 12"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Клиенты</div>
+              <div class="stat-value">3 741</div>
+              <div class="stat-change up">↑ 5% к прошлому месяцу</div>
+            </div>
+            <div class="stat-icon c-navy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Конверсия</div>
+              <div class="stat-value">4.2%</div>
+              <div class="stat-change down">↓ 0.3% к прошлому месяцу</div>
+            </div>
+            <div class="stat-icon c-purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="5" x2="5" y2="19"/>
+                <circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- DASHBOARD-BOTTOM -->
+      </section>
       <section id="orders" class="section"><!-- ORDERS --></section>
       <section id="products" class="section"><!-- PRODUCTS --></section>
       <section id="clients" class="section"><!-- CLIENTS --></section>
