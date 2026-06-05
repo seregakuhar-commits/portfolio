@@ -389,7 +389,9 @@
     }
 
     .menu-photo img {
+      width: 100%;
       height: 100%;
+      object-fit: cover;
       transition: transform 0.5s;
     }
 
@@ -506,11 +508,20 @@
     }
 
     .about-badge strong {
-      display: block;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--accent);
-      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.35rem;
+    }
+
+    .about-badge strong svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .about-badge span {
@@ -543,7 +554,9 @@
     }
 
     .gallery-item img {
+      width: 100%;
       height: 100%;
+      object-fit: cover;
       transition: transform 0.5s;
     }
 
@@ -727,8 +740,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
       flex-shrink: 0;
+    }
+
+    .contact-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .contact-info strong {
@@ -1049,7 +1071,7 @@
         <div class="about-photo">
           <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80&fit=crop" alt="Интерьер кафе">
           <div class="about-badge">
-            <strong>☕</strong>
+            <strong><svg viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg></strong>
             <span>Собственная обжарка</span>
           </div>
         </div>
@@ -1165,14 +1187,14 @@
           <!-- ✏️ ИЗМЕНИТЬ: контактные данные -->
           <ul class="contact-list">
             <li class="contact-item">
-              <div class="contact-icon">📍</div>
+              <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
               <div class="contact-info">
                 <strong>Адрес</strong>
                 <span>ул. Примерная, д. 12, 1 этаж<br>м. Центральная, 3 мин пешком</span>
               </div>
             </li>
             <li class="contact-item">
-              <div class="contact-icon">🕐</div>
+              <div class="contact-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
               <div class="contact-info">
                 <strong>Часы работы</strong>
                 <div class="hours-table">
@@ -1182,14 +1204,14 @@
               </div>
             </li>
             <li class="contact-item">
-              <div class="contact-icon">📞</div>
+              <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.92 3.28 2 2 0 0 1 3.9 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
               <div class="contact-info">
                 <strong>Телефон</strong>
                 <a href="tel:+7XXXXXXXXXX">+7 (XXX) XXX-XX-XX</a>
               </div>
             </li>
             <li class="contact-item">
-              <div class="contact-icon">✉️</div>
+              <div class="contact-icon"><svg viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
               <div class="contact-info">
                 <strong>Email</strong>
                 <a href="mailto:hello@cafe.ru">hello@cafe.ru</a>
