@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Café Уют — Завтраки и авторская кухня</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ✏️ ИЗМЕНИТЬ: основные цвета */
+    :root {
+      --bg:           #faf8f5;
+      --white:        #ffffff;
+      --accent:       #c0633a;
+      --accent-light: #e8956d;
+      --accent-pale:  #fdf0eb;
+      --dark:         #2c1a0e;
+      --text:         #5c4033;
+      --muted:        #9e7c6c;
+      --border:       #e8ddd5;
+      --card-bg:      #ffffff;
+      --section-alt:  #f4f0eb;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', Georgia, serif;
+      line-height: 1.25;
+      color: var(--dark);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; object-fit: cover; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      transition: background 0.3s, box-shadow 0.3s, padding 0.3s;
+    }
+
+    nav.scrolled {
+      background: var(--white);
+      box-shadow: 0 2px 20px rgba(44,26,14,.08);
+      padding: 0.85rem 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.3px;
+      transition: color 0.3s;
+    }
+
+    nav.scrolled .nav-logo { color: var(--dark); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.25s;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+
+    nav.scrolled .nav-links a { color: var(--text); }
+    nav.scrolled .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--white) !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      font-size: 0.875rem !important;
+      font-weight: 700 !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+
+    .nav-cta:hover { background: var(--accent-light) !important; transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1600&q=80&fit=crop');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.04);
+      transition: transform 8s ease;
+    }
+
+    .hero.loaded .hero-bg { transform: scale(1); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(44,26,14,.72) 0%,
+        rgba(44,26,14,.45) 60%,
+        rgba(44,26,14,.25) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      padding: 0 1.5rem;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,.3);
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: #f5c49a;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.78);
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    .btn-primary:hover { background: var(--accent-light); }
+
+    .btn-outline {
+      background: rgba(255,255,255,0.12);
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.4);
+    }
+
+    .btn-outline:hover { background: rgba(255,255,255,0.22); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.5);
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.3);
+      animation: scrollPulse 2s infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 5rem 0;
+      background: var(--section-alt);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2.25rem 1.75rem;
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(44,26,14,.1);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.25rem;
+      line-height: 1;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── MENU ── */
+    .menu-section {
+      padding: 5.5rem 0;
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .menu-header .section-sub {
+      margin: 0 auto;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .menu-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(44,26,14,.1);
+    }
+
+    .menu-photo {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .menu-photo img {
+      height: 100%;
+      transition: transform 0.5s;
+    }
+
+    .menu-card:hover .menu-photo img { transform: scale(1.06); }
+
+    .menu-body {
+      padding: 1.25rem;
+    }
+
+    .menu-body h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .menu-body p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .menu-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .menu-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .menu-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+      background: var(--accent-pale);
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 5.5rem 0;
+      background: var(--section-alt);
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-text h2 {
+      margin-bottom: 1.25rem;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      line-height: 1.75;
+    }
+
+    .about-text p:last-of-type { margin-bottom: 1.75rem; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item { text-align: center; }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .about-photo {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(44,26,14,.15);
+      position: relative;
+    }
+
+    .about-photo img { height: 480px; }
+
+    .about-badge {
+      position: absolute;
+      bottom: 1.75rem;
+      left: 1.75rem;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 8px 24px rgba(44,26,14,.12);
+    }
+
+    .about-badge strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .about-badge span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ── GALLERY ── */
+    .gallery {
+      padding: 5.5rem 0;
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 220px);
+      gap: 1rem;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      height: 100%;
+      transition: transform 0.5s;
+    }
+
+    .gallery-item:hover img { transform: scale(1.08); }
+
+    /* ── REVIEWS ── */
+    .reviews {
+      padding: 5.5rem 0;
+      background: var(--section-alt);
+    }
+
+    .reviews-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .review-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+    }
+
+    .review-stars {
+      color: #f0a500;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .review-text {
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+
+    .review-text::before { content: '«'; }
+    .review-text::after  { content: '»'; }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .review-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent-pale);
+      color: var(--accent);
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .review-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .review-date {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── BOOKING ── */
+    .booking {
+      padding: 5.5rem 0;
+      background: var(--dark);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .booking::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1600&q=60&fit=crop');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.12;
+    }
+
+    .booking-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .booking .section-label { color: var(--accent-light); }
+
+    .booking h2 {
+      color: var(--white);
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      margin-bottom: 1rem;
+    }
+
+    .booking p {
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 2.5rem;
+      font-size: 1.05rem;
+    }
+
+    .booking-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-booking-primary {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    .btn-booking-primary:hover { background: var(--accent-light); }
+
+    .btn-booking-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.35);
+    }
+
+    .btn-booking-outline:hover { background: rgba(255,255,255,0.1); }
+
+    /* ── CONTACTS ── */
+    .contacts {
+      padding: 5.5rem 0;
+    }
+
+    .contacts-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contacts-left h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .contacts-left > p {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-pale);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-info strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.15rem;
+    }
+
+    .contact-info span, .contact-info a {
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-info a:hover { color: var(--accent); }
+
+    .hours-table {
+      margin-top: 0.4rem;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.87rem;
+      color: var(--muted);
+      padding: 0.2rem 0;
+    }
+
+    .hours-row span:first-child { color: var(--text); font-weight: 600; }
+
+    .contacts-map {
+      background: var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+      gap: 0.5rem;
+      flex-direction: column;
+    }
+
+    .map-placeholder-icon { font-size: 2.5rem; opacity: 0.5; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 2.5rem 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .footer-copy {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .footer-copy a {
+      color: var(--accent-light);
+      transition: color 0.2s;
+    }
+
+    .footer-copy a:hover { color: var(--accent); }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .social-link:hover { background: var(--accent); color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo img { height: 320px; }
+      .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+      .contacts-inner { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 650px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 180px); }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="container nav-inner">
+      <!-- ✏️ ИЗМЕНИТЬ: название кафе в шапке -->
+      <a href="#" class="nav-logo">Café · Уют</a>
+      <ul class="nav-links">
+        <li><a href="#menu">Меню</a></li>
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#gallery">Галерея</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+      <!-- ✏️ ИЗМЕНИТЬ: ссылка на бронирование (телефон или Telegram) -->
+      <a href="https://t.me/YOURUSERNAME" target="_blank" class="nav-links nav-cta btn btn-primary" style="color:#fff;padding:0.5rem 1.25rem;font-size:0.875rem;">Забронировать</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <!-- ✏️ ИЗМЕНИТЬ: слоган над заголовком -->
+      <p class="hero-tag">☕ Открыто с 8:00 до 22:00</p>
+      <!-- ✏️ ИЗМЕНИТЬ: главный заголовок -->
+      <h1>Место, где<br><em>вкусно</em> и уютно</h1>
+      <!-- ✏️ ИЗМЕНИТЬ: подзаголовок -->
+      <p class="hero-sub">Завтраки, авторская кухня и кофе с душой — в самом центре города</p>
+      <div class="hero-btns">
+        <a href="#menu" class="btn btn-primary">Смотреть меню</a>
+        <!-- ✏️ ИЗМЕНИТЬ: ссылка на телефон или Telegram -->
+        <a href="https://t.me/YOURUSERNAME" target="_blank" class="btn btn-outline">Забронировать стол</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Листайте</div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <!-- ✏️ ИЗМЕНИТЬ: три главных преимущества -->
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🍳</div>
+          <h3>Домашняя кухня</h3>
+          <p>Готовим из свежих местных продуктов каждое утро. Без полуфабрикатов.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">☕</div>
+          <h3>Авторский кофе</h3>
+          <p>Зерно от лучших обжарщиков, профессиональное оборудование и опытный бариста.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌿</div>
+          <h3>Уютная атмосфера</h3>
+          <p>Тихое место для встреч, работы и отдыха. Быстрый Wi-Fi и зарядки на каждом столе.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+      <div class="menu-header">
+        <p class="section-label">Что попробовать</p>
+        <!-- ✏️ ИЗМЕНИТЬ: заголовок секции меню -->
+        <h2 class="section-title">Наши хиты</h2>
+        <p class="section-sub">Блюда, которые заказывают снова и снова</p>
+      </div>
+      <!-- ✏️ ИЗМЕНИТЬ: 6 блюд — название, описание, цена, тег -->
+      <div class="menu-grid">
+
+        <div class="menu-card">
+          <div class="menu-photo">
+            <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&q=80&fit=crop" alt="Яйца Бенедикт" loading="lazy">
+          </div>
+          <div class="menu-body">
+            <h3>Яйца Бенедикт</h3>
+            <p>Яйцо пашот, лосось, голландский соус на хрустящем тосте</p>
+            <div class="menu-footer">
+              <span class="menu-price">490 ₽</span>
+              <span class="menu-tag">Завтрак</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-photo">
+            <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80&fit=crop" alt="Панкейки" loading="lazy">
+          </div>
+          <div class="menu-body">
+            <h3>Панкейки с ягодами</h3>
+            <p>Пышные панкейки со свежими ягодами, кленовым сиропом и маслом</p>
+            <div class="menu-footer">
+              <span class="menu-price">420 ₽</span>
+              <span class="menu-tag">Завтрак</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-photo">
+            <img src="https://images.unsplash.com/photo-1541519227354-08fa5d50c820?w=600&q=80&fit=crop" alt="Авокадо тост" loading="lazy">
+          </div>
+          <div class="menu-body">
+            <h3>Авокадо тост</h3>
+            <p>Поджаренный ржаной хлеб, гуакамоле, помидоры черри, микрозелень</p>
+            <div class="menu-footer">
+              <span class="menu-price">380 ₽</span>
+              <span class="menu-tag">Хит</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-photo">
+            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&fit=crop" alt="Боул с лососем" loading="lazy">
+          </div>
+          <div class="menu-body">
+            <h3>Боул с лососем</h3>
+            <p>Рис, маринованный лосось, авокадо, огурец, эдамаме, соус терияки</p>
+            <div class="menu-footer">
+              <span class="menu-price">640 ₽</span>
+              <span class="menu-tag">Обед</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-photo">
+            <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80&fit=crop" alt="Суп-пюре" loading="lazy">
+          </div>
+          <div class="menu-body">
+            <h3>Томатный суп-пюре</h3>
+            <p>Крем-суп из запечённых томатов, базилик, сливки, гренки</p>
+            <div class="menu-footer">
+              <span class="menu-price">320 ₽</span>
+              <span class="menu-tag">Обед</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="menu-photo">
+            <img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80&fit=crop" alt="Тарт" loading="lazy">
+          </div>
+          <div class="menu-body">
+            <h3>Лимонный тарт</h3>
+            <p>Хрустящее песочное тесто, нежный лимонный крем, меренга</p>
+            <div class="menu-footer">
+              <span class="menu-price">290 ₽</span>
+              <span class="menu-tag">Десерт</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-text">
+          <p class="section-label">Наша история</p>
+          <!-- ✏️ ИЗМЕНИТЬ: заголовок и текст «О нас» -->
+          <h2 class="section-title">Кафе, которое<br>стало домом</h2>
+          <p>Мы открылись в 2019 году с одной идеей: создать место, куда хочется возвращаться. Не за быстрой едой, а за атмосферой, вкусом и добрым сервисом.</p>
+          <p>Наш шеф-повар каждое утро лично выбирает продукты на рынке. В меню — только сезонные ингредиенты, без заморозки и полуфабрикатов.</p>
+          <a href="#contacts" class="btn btn-primary">Найти нас</a>
+          <!-- ✏️ ИЗМЕНИТЬ: три цифры — статистика кафе -->
+          <div class="about-stats">
+            <div class="stat-item">
+              <span class="stat-num">5+</span>
+              <span class="stat-label">лет в городе</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">40+</span>
+              <span class="stat-label">блюд в меню</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">4.9</span>
+              <span class="stat-label">рейтинг на картах</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-photo">
+          <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80&fit=crop" alt="Интерьер кафе">
+          <div class="about-badge">
+            <strong>☕</strong>
+            <span>Собственная обжарка</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="container">
+      <div class="gallery-header">
+        <p class="section-label">Атмосфера</p>
+        <h2 class="section-title">Загляните к нам</h2>
+      </div>
+      <!-- ✏️ ИЗМЕНИТЬ: замените URL на свои фотографии -->
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80&fit=crop" alt="Кофе" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80&fit=crop" alt="Капучино" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d?w=600&q=80&fit=crop" alt="Здоровая еда" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1484980972926-edee96e0960d?w=600&q=80&fit=crop" alt="Завтрак" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600&q=80&fit=crop" alt="Блюдо" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1551183053-bf91798d047a?w=600&q=80&fit=crop" alt="Выпечка" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews">
+    <div class="container">
+      <div class="reviews-header">
+        <p class="section-label">Отзывы гостей</p>
+        <h2 class="section-title">Что говорят гости</h2>
+      </div>
+      <!-- ✏️ ИЗМЕНИТЬ: 3 отзыва — инициалы, имя, текст, дата -->
+      <div class="reviews-grid">
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Лучшие яйца Бенедикт в городе! Атмосфера уютная, персонал внимательный. Теперь приходим каждые выходные всей семьёй.</p>
+          <div class="review-author">
+            <div class="review-avatar">АМ</div>
+            <div>
+              <div class="review-name">Анна Михайлова</div>
+              <div class="review-date">Апрель 2025</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Работаю здесь удалённо уже полгода. Хороший Wi-Fi, вкусный кофе, никто не торопит. Идеальное место для рабочих встреч.</p>
+          <div class="review-author">
+            <div class="review-avatar">ДК</div>
+            <div>
+              <div class="review-name">Дмитрий Козлов</div>
+              <div class="review-date">Март 2025</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">Заказывали кафе для проведения небольшого корпоратива. Всё организовали чётко, еда была свежей и вкусной. Рекомендую!</p>
+          <div class="review-author">
+            <div class="review-avatar">ЕВ</div>
+            <div>
+              <div class="review-name">Елена Волкова</div>
+              <div class="review-date">Февраль 2025</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="booking">
+    <div class="booking-inner">
+      <p class="section-label">Резервация</p>
+      <!-- ✏️ ИЗМЕНИТЬ: заголовок CTA-секции -->
+      <h2>Забронируйте столик</h2>
+      <p>Позвоните нам или напишите в Telegram — ответим в течение нескольких минут</p>
+      <div class="booking-btns">
+        <!-- ✏️ ИЗМЕНИТЬ: телефон для звонка -->
+        <a href="tel:+7XXXXXXXXXX" class="btn btn-booking-primary">📞 Позвонить</a>
+        <!-- ✏️ ИЗМЕНИТЬ: Telegram -->
+        <a href="https://t.me/YOURUSERNAME" target="_blank" class="btn btn-booking-outline">✈️ Написать в Telegram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section class="contacts" id="contacts">
+    <div class="container">
+      <div class="contacts-inner">
+        <div class="contacts-left">
+          <p class="section-label">Где нас найти</p>
+          <h2 class="section-title">Контакты</h2>
+          <p>Ждём вас с утра до вечера, без выходных</p>
+          <!-- ✏️ ИЗМЕНИТЬ: контактные данные -->
+          <ul class="contact-list">
+            <li class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div class="contact-info">
+                <strong>Адрес</strong>
+                <span>ул. Примерная, д. 12, 1 этаж<br>м. Центральная, 3 мин пешком</span>
+              </div>
+            </li>
+            <li class="contact-item">
+              <div class="contact-icon">🕐</div>
+              <div class="contact-info">
+                <strong>Часы работы</strong>
+                <div class="hours-table">
+                  <div class="hours-row"><span>Пн — Пт</span><span>08:00 — 22:00</span></div>
+                  <div class="hours-row"><span>Сб — Вс</span><span>09:00 — 23:00</span></div>
+                </div>
+              </div>
+            </li>
+            <li class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div class="contact-info">
+                <strong>Телефон</strong>
+                <a href="tel:+7XXXXXXXXXX">+7 (XXX) XXX-XX-XX</a>
+              </div>
+            </li>
+            <li class="contact-item">
+              <div class="contact-icon">✉️</div>
+              <div class="contact-info">
+                <strong>Email</strong>
+                <a href="mailto:hello@cafe.ru">hello@cafe.ru</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="contacts-map">
+          <div class="map-placeholder-icon">🗺️</div>
+          <p>Карта<br><small style="opacity:.6">Вставьте iframe с Яндекс Картами или Google Maps</small></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <!-- ✏️ ИЗМЕНИТЬ: название кафе и год -->
+      <span class="footer-logo">Café · Уют</span>
+      <span class="footer-copy">© 2025 Café Уют · Демо-проект · <a href="../index.html">← Портфолио</a></span>
+      <div class="footer-socials">
+        <!-- ✏️ ИЗМЕНИТЬ: ссылки на соцсети -->
+        <a href="https://t.me/YOURUSERNAME" target="_blank" class="social-link" title="Telegram">✈️</a>
+        <a href="#" class="social-link" title="Instagram">📸</a>
+        <a href="#" class="social-link" title="VK">💬</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    const hero = document.querySelector('.hero');
+
+    // Sticky nav
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Hero image load animation
+    window.addEventListener('load', () => {
+      hero.classList.add('loaded');
+    });
+
+    // Scroll-spy nav links
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+
+</body>
+</html>
