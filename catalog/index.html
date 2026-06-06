@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopDemo — Каталог товаров</title>
+  <style>
+    :root {
+      --bg:     #f5f7fa;
+      --white:  #ffffff;
+      --dark:   #1a2332;
+      --accent: #2563eb;
+      --accent2:#1d4ed8;
+      --text:   #2c3344;
+      --muted:  #6b7280;
+      --border: #e2e8f0;
+      --success:#16a34a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--dark);
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+
+    .header-logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--white);
+      white-space: nowrap;
+      letter-spacing: -0.3px;
+    }
+
+    .header-logo span { color: var(--accent); }
+
+    .header-search {
+      flex: 1;
+      position: relative;
+      max-width: 420px;
+    }
+
+    .header-search svg {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: var(--muted);
+      pointer-events: none;
+    }
+
+    #search-input {
+      width: 100%;
+      padding: 0.6rem 1rem 0.6rem 2.4rem;
+      border: none;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: background 0.2s;
+    }
+
+    #search-input::placeholder { color: rgba(255,255,255,0.4); }
+    #search-input:focus { background: rgba(255,255,255,0.16); }
+
+    .header-cart {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.55rem 1.1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+      transition: background 0.2s;
+      margin-left: auto;
+    }
+
+    .header-cart:hover { background: var(--accent2); }
+
+    .header-cart svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+    }
+
+    #cart-count {
+      background: var(--white);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 800;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      flex: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      gap: 1.75rem;
+      width: 100%;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .filter-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
+    }
+
+    /* category buttons */
+    .cat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cat-btn {
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-family: inherit;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cat-btn:hover { background: var(--bg); }
+
+    .cat-btn.active {
+      background: var(--accent);
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .cat-count {
+      font-size: 0.72rem;
+      opacity: 0.6;
+    }
+
+    /* price range */
+    .price-range { margin-bottom: 1.5rem; }
+
+    .price-inputs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .price-inputs input {
+      width: 100%;
+      padding: 0.45rem 0.6rem;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-family: inherit;
+      color: var(--text);
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .price-inputs input:focus { border-color: var(--accent); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .price-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+
+    /* sort */
+    .sort-select {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-bottom: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .sort-select:focus { border-color: var(--accent); }
+
+    /* reset button */
+    .reset-btn {
+      width: 100%;
+      padding: 0.55rem;
+      background: none;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: inherit;
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── PRODUCTS ── */
+    .products-area { flex: 1; min-width: 0; }
+
+    .products-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .products-count {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .products-count strong { color: var(--text); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.1rem;
+    }
+
+    .product-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.09);
+    }
+
+    .product-card.hidden { display: none; }
+
+    .product-img {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-img svg {
+      width: 44px;
+      height: 44px;
+      stroke: rgba(255,255,255,0.4);
+    }
+
+    .product-body {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-cat {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .product-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
+    }
+
+    .product-price {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-top: auto;
+      padding-top: 0.6rem;
+    }
+
+    .add-to-cart {
+      width: 100%;
+      margin-top: 0.6rem;
+      padding: 0.6rem;
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .add-to-cart svg { width: 14px; height: 14px; stroke: currentColor; }
+
+    .add-to-cart:hover { background: var(--accent2); }
+
+    .add-to-cart.added {
+      background: var(--success);
+    }
+
+    /* empty state */
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--muted);
+    }
+
+    .empty-state svg {
+      width: 56px;
+      height: 56px;
+      stroke: var(--border);
+      margin: 0 auto 1rem;
+    }
+
+    .empty-state h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 0.4rem; }
+    .empty-state p { font-size: 0.9rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+      padding: 1.25rem 2rem;
+      font-size: 0.85rem;
+    }
+
+    footer a { color: #2563eb; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .layout { flex-direction: column; }
+      .sidebar { width: 100%; }
+      .header-search { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-logo"><span>Shop</span>Demo</div>
+    <div class="header-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <input type="text" id="search-input" placeholder="Поиск товаров...">
+    </div>
+    <button class="header-cart" id="cart-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      Корзина
+      <span id="cart-count">0</span>
+    </button>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-card">
+
+        <p class="filter-title">Категория</p>
+        <div class="cat-list" id="cat-list">
+          <button class="cat-btn active" data-cat="all">Все товары <span class="cat-count">12</span></button>
+          <button class="cat-btn" data-cat="electronics">Электроника <span class="cat-count">3</span></button>
+          <button class="cat-btn" data-cat="clothing">Одежда <span class="cat-count">3</span></button>
+          <button class="cat-btn" data-cat="home">Дом <span class="cat-count">3</span></button>
+          <button class="cat-btn" data-cat="sport">Спорт <span class="cat-count">3</span></button>
+        </div>
+
+        <p class="filter-title">Цена</p>
+        <div class="price-range">
+          <div class="price-inputs">
+            <input type="number" id="price-min" value="0" min="0" max="10000" placeholder="От">
+            <input type="number" id="price-max" value="6000" min="0" max="6000" placeholder="До">
+          </div>
+          <input type="range" id="price-slider" min="0" max="6000" value="6000" step="50">
+          <div class="price-labels"><span>0 ₽</span><span>6 000 ₽</span></div>
+        </div>
+
+        <p class="filter-title">Сортировка</p>
+        <select class="sort-select" id="sort-select">
+          <option value="default">По умолчанию</option>
+          <option value="price-asc">Цена ↑</option>
+          <option value="price-desc">Цена ↓</option>
+          <option value="name-asc">Название А–Я</option>
+        </select>
+
+        <button class="reset-btn" id="reset-btn">Сбросить фильтры</button>
+
+      </div>
+    </aside>
+
+    <!-- PRODUCTS -->
+    <div class="products-area">
+      <div class="products-header">
+        <span class="products-count">Показано: <strong id="visible-count">12</strong> из 12</span>
+      </div>
+
+      <div class="products-grid" id="products-grid">
+
+        <div class="product-card" data-cat="electronics" data-price="2990" data-name="Наушники беспроводные">
+          <div class="product-img" style="background: linear-gradient(135deg,#1e3a5f,#2d5a8e);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Электроника</span>
+            <span class="product-name">Наушники беспроводные</span>
+            <span class="product-price">2 990 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="electronics" data-price="4500" data-name="Механическая клавиатура">
+          <div class="product-img" style="background: linear-gradient(135deg,#0f2840,#1e3a5f);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M18 14h.01M10 14h4"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Электроника</span>
+            <span class="product-name">Механическая клавиатура</span>
+            <span class="product-price">4 500 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="electronics" data-price="1800" data-name="Беспроводная мышь">
+          <div class="product-img" style="background: linear-gradient(135deg,#1a3050,#2d5a8e);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="7"/><path d="M12 2v8M5 10h14"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Электроника</span>
+            <span class="product-name">Беспроводная мышь</span>
+            <span class="product-price">1 800 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="clothing" data-price="890" data-name="Базовая футболка">
+          <div class="product-img" style="background: linear-gradient(135deg,#1e4d3a,#166534);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.86H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.86l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Одежда</span>
+            <span class="product-name">Базовая футболка</span>
+            <span class="product-price">890 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="clothing" data-price="5200" data-name="Зимняя куртка">
+          <div class="product-img" style="background: linear-gradient(135deg,#14532d,#166534);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12m0 0V2m0 10H2m10 0h10"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Одежда</span>
+            <span class="product-name">Зимняя куртка</span>
+            <span class="product-price">5 200 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="clothing" data-price="3400" data-name="Кроссовки спортивные">
+          <div class="product-img" style="background: linear-gradient(135deg,#1a4731,#166534);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h4l2 5h6l2-5h4"/><path d="M5 7c0 4.4 3.6 8 8 8s8-3.6 8-8"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Одежда</span>
+            <span class="product-name">Кроссовки спортивные</span>
+            <span class="product-price">3 400 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="home" data-price="2100" data-name="Настольная лампа">
+          <div class="product-img" style="background: linear-gradient(135deg,#5c3a00,#92400e);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Дом</span>
+            <span class="product-name">Настольная лампа</span>
+            <span class="product-price">2 100 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="home" data-price="650" data-name="Органайзер для стола">
+          <div class="product-img" style="background: linear-gradient(135deg,#7c3d00,#b45309);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 8h16M8 4v16"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Дом</span>
+            <span class="product-name">Органайзер для стола</span>
+            <span class="product-price">650 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="home" data-price="1200" data-name="Термос 500 мл">
+          <div class="product-img" style="background: linear-gradient(135deg,#6b3500,#92400e);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10l1 5H6l1-5z"/><rect x="6" y="8" width="12" height="12" rx="2"/><path d="M10 12h4"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Дом</span>
+            <span class="product-name">Термос 500 мл</span>
+            <span class="product-price">1 200 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="sport" data-price="1500" data-name="Коврик для йоги">
+          <div class="product-img" style="background: linear-gradient(135deg,#4c0e8c,#6d28d9);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v4H6a3 3 0 0 0 0 6h3v4a3 3 0 0 0 6 0v-4h3a3 3 0 0 0 0-6h-3V5a3 3 0 0 0-3-3z"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Спорт</span>
+            <span class="product-name">Коврик для йоги</span>
+            <span class="product-price">1 500 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="sport" data-price="2800" data-name="Гантели 5 кг (пара)">
+          <div class="product-img" style="background: linear-gradient(135deg,#3b0764,#5b21b6);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6z"/><line x1="12" y1="5" x2="12" y2="19"/><path d="M6 13a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H6z"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Спорт</span>
+            <span class="product-name">Гантели 5 кг (пара)</span>
+            <span class="product-price">2 800 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+        <div class="product-card" data-cat="sport" data-price="550" data-name="Бутылка спортивная">
+          <div class="product-img" style="background: linear-gradient(135deg,#4c1d8c,#6d28d9);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10l1 5H6l1-5z"/><rect x="6" y="8" width="12" height="13" rx="2"/></svg>
+          </div>
+          <div class="product-body">
+            <span class="product-cat">Спорт</span>
+            <span class="product-name">Бутылка спортивная</span>
+            <span class="product-price">550 ₽</span>
+            <button class="add-to-cart" onclick="addToCart(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              В корзину
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="empty-state" id="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <h3>Товары не найдены</h3>
+        <p>Попробуйте изменить фильтры или поисковый запрос</p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    Демо-проект · <a href="../index.html">← Портфолио</a>
+  </footer>
+
+  <script>
+    let cartCount = 0;
+    let activeCat = 'all';
+
+    const cards = document.querySelectorAll('.product-card');
+    const countEl = document.getElementById('visible-count');
+    const emptyEl = document.getElementById('empty-state');
+    const cartCountEl = document.getElementById('cart-count');
+    const searchInput = document.getElementById('search-input');
+    const priceSlider = document.getElementById('price-slider');
+    const priceMin = document.getElementById('price-min');
+    const priceMax = document.getElementById('price-max');
+    const sortSelect = document.getElementById('sort-select');
+    const grid = document.getElementById('products-grid');
+
+    function getFilters() {
+      return {
+        cat: activeCat,
+        search: searchInput.value.toLowerCase().trim(),
+        max: parseInt(priceMax.value) || 6000,
+        min: parseInt(priceMin.value) || 0,
+        sort: sortSelect.value
+      };
+    }
+
+    function filterAndSort() {
+      const f = getFilters();
+      const cardArr = Array.from(cards);
+
+      // filter
+      cardArr.forEach(c => {
+        const catMatch = f.cat === 'all' || c.dataset.cat === f.cat;
+        const priceMatch = parseInt(c.dataset.price) >= f.min && parseInt(c.dataset.price) <= f.max;
+        const nameMatch = c.dataset.name.toLowerCase().includes(f.search);
+        c.classList.toggle('hidden', !(catMatch && priceMatch && nameMatch));
+      });
+
+      // sort visible
+      const visible = cardArr.filter(c => !c.classList.contains('hidden'));
+      visible.sort((a, b) => {
+        if (f.sort === 'price-asc') return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+        if (f.sort === 'price-desc') return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+        if (f.sort === 'name-asc') return a.dataset.name.localeCompare(b.dataset.name, 'ru');
+        return 0;
+      });
+
+      visible.forEach(c => grid.appendChild(c));
+
+      countEl.textContent = visible.length;
+      emptyEl.style.display = visible.length === 0 ? 'block' : 'none';
+    }
+
+    // category buttons
+    document.getElementById('cat-list').addEventListener('click', e => {
+      const btn = e.target.closest('.cat-btn');
+      if (!btn) return;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCat = btn.dataset.cat;
+      filterAndSort();
+    });
+
+    // search
+    searchInput.addEventListener('input', filterAndSort);
+
+    // price slider → max input
+    priceSlider.addEventListener('input', () => {
+      priceMax.value = priceSlider.value;
+      filterAndSort();
+    });
+
+    // price max input → slider
+    priceMax.addEventListener('input', () => {
+      priceSlider.value = priceMax.value;
+      filterAndSort();
+    });
+
+    priceMin.addEventListener('input', filterAndSort);
+
+    // sort
+    sortSelect.addEventListener('change', filterAndSort);
+
+    // reset
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      searchInput.value = '';
+      priceMin.value = 0;
+      priceMax.value = 6000;
+      priceSlider.value = 6000;
+      sortSelect.value = 'default';
+      activeCat = 'all';
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-cat="all"]').classList.add('active');
+      filterAndSort();
+    });
+
+    // add to cart
+    function addToCart(btn) {
+      if (btn.classList.contains('added')) return;
+      cartCount++;
+      cartCountEl.textContent = cartCount;
+      btn.classList.add('added');
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Добавлено`;
+    }
+  </script>
+</body>
+</html>

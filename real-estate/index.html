@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ПремьерЭстейт — Агентство недвижимости</title>
+  <style>
+    :root {
+      --bg:     #f0f4f8;
+      --white:  #ffffff;
+      --dark:   #0f1c2d;
+      --dark2:  #1e3a5f;
+      --accent: #b8934a;
+      --text:   #2c3344;
+      --muted:  #6b7280;
+      --border: #dde3ec;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    nav.scrolled {
+      background: var(--white);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    .nav-logo {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.3px;
+      transition: color 0.3s;
+    }
+
+    nav.scrolled .nav-logo { color: var(--dark); }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      transition: color 0.2s;
+    }
+
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { color: var(--accent); }
+    nav.scrolled .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--dark) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 5px;
+      font-weight: 700 !important;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      color: var(--white);
+    }
+
+    .hero-inner { max-width: 700px; }
+
+    .hero-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* search bar */
+    .hero-search {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 0.6rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .hero-search select,
+    .hero-search input {
+      flex: 1;
+      min-width: 130px;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--white);
+      -webkit-appearance: none;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .hero-search select:focus,
+    .hero-search input:focus { border-color: var(--accent); }
+
+    .hero-search button {
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      padding: 0.75rem 1.6rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hero-search button:hover { opacity: 0.85; }
+    .hero-search button svg { width: 16px; height: 16px; stroke: currentColor; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2rem; }
+
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.3px;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 480px;
+    }
+
+    .section-head { margin-bottom: 2.5rem; }
+
+    /* ── LISTINGS ── */
+    .listings { background: var(--white); }
+
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+
+    .listing-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .listing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+
+    .listing-img {
+      height: 200px;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .listing-img svg {
+      width: 52px;
+      height: 52px;
+      stroke: rgba(255,255,255,0.25);
+    }
+
+    .listing-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      background: var(--accent);
+      color: var(--dark);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .listing-price {
+      position: absolute;
+      bottom: 0.75rem;
+      right: 0.75rem;
+      background: rgba(15,28,45,0.88);
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 5px;
+    }
+
+    .listing-body { padding: 1.25rem; }
+
+    .listing-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .listing-address {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .listing-address svg { width: 13px; height: 13px; stroke: var(--accent); }
+
+    .listing-meta {
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    .listing-meta span {
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .listing-meta svg { width: 14px; height: 14px; stroke: var(--accent); }
+
+    /* ── STATS ── */
+    .stats { background: var(--dark); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ── SERVICES ── */
+    .services-section { background: var(--bg); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    }
+
+    .svc-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--dark);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.1rem;
+      transition: background 0.25s;
+    }
+
+    .service-card:hover .svc-icon { background: var(--accent); }
+
+    .svc-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--white);
+      transition: stroke 0.25s;
+    }
+
+    .service-card:hover .svc-icon svg { stroke: var(--dark); }
+
+    .service-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .service-card p {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── REVIEWS ── */
+    .reviews { background: var(--white); }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .review-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem;
+    }
+
+    .review-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .review-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .review-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--dark);
+    }
+
+    .review-stars {
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    .review-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+      text-align: center;
+    }
+
+    .cta-section .section-title { color: var(--white); }
+    .cta-section .section-sub { color: rgba(255,255,255,0.5); margin: 0 auto 2.5rem; }
+
+    .cta-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 500px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .cta-form input {
+      flex: 1;
+      min-width: 160px;
+      padding: 0.85rem 1.1rem;
+      border: 1.5px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .cta-form input::placeholder { color: rgba(255,255,255,0.35); }
+    .cta-form input:focus { border-color: var(--accent); }
+
+    .cta-form button {
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      padding: 0.85rem 1.8rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .cta-form button:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0a1520;
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--accent); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .listings-grid,
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .listings-grid,
+      .services-grid,
+      .reviews-grid,
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a class="nav-logo" href="#"><span>Премьер</span>Эстейт</a>
+    <ul class="nav-links">
+      <li><a href="#listings">Объекты</a></li>
+      <li><a href="#services">Услуги</a></li>
+      <li><a href="#reviews">Отзывы</a></li>
+      <li><a class="nav-cta" href="#cta">Консультация</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-label">Агентство недвижимости</p>
+      <h1>Найдите <span>дом</span>,<br>который вы заслуживаете</h1>
+      <p class="hero-sub">Более 850 объектов в базе. Покупка, продажа и аренда — с профессиональной поддержкой на каждом этапе.</p>
+      <div class="hero-search">
+        <select>
+          <option value="">Тип объекта</option>
+          <option>Квартира</option>
+          <option>Дом / Коттедж</option>
+          <option>Коммерческая</option>
+          <option>Земельный участок</option>
+        </select>
+        <input type="text" placeholder="Район или адрес">
+        <select>
+          <option value="">Бюджет</option>
+          <option>до 5 млн ₽</option>
+          <option>до 10 млн ₽</option>
+          <option>до 20 млн ₽</option>
+          <option>Без ограничений</option>
+        </select>
+        <button type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          Найти
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTINGS -->
+  <section class="listings" id="listings">
+    <div style="max-width:1060px;margin:0 auto;">
+      <div class="section-head">
+        <p class="section-label">Актуальные предложения</p>
+        <h2 class="section-title">Свежие объекты</h2>
+        <p class="section-sub">Подобранные варианты — проверены юридически и готовы к сделке.</p>
+      </div>
+      <div class="listings-grid">
+
+        <div class="listing-card">
+          <div class="listing-img">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span class="listing-badge">Продажа</span>
+            <span class="listing-price">12 500 000 ₽</span>
+          </div>
+          <div class="listing-body">
+            <h3>3-комнатная квартира</h3>
+            <p class="listing-address">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              ул. Ленина, 45 — Центр
+            </p>
+            <div class="listing-meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                3 комнаты
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                87 м²
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M3 14h18M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg>
+                7 этаж
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="listing-card">
+          <div class="listing-img" style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8e 100%);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span class="listing-badge">Аренда</span>
+            <span class="listing-price">75 000 ₽/мес</span>
+          </div>
+          <div class="listing-body">
+            <h3>Дом в пригороде</h3>
+            <p class="listing-address">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              пос. Солнечный, д. 12
+            </p>
+            <div class="listing-meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                5 комнат
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                180 м²
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                6 соток
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="listing-card">
+          <div class="listing-img" style="background: linear-gradient(135deg, #1a3050 0%, #0f2840 100%);">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            <span class="listing-badge">Продажа</span>
+            <span class="listing-price">8 900 000 ₽</span>
+          </div>
+          <div class="listing-body">
+            <h3>Офис в бизнес-центре</h3>
+            <p class="listing-address">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              пр. Победы, 77 — Деловой р-н
+            </p>
+            <div class="listing-meta">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                Коммерция
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                120 м²
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M3 14h18M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg>
+                3 этаж
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-num">850+</div>
+        <div class="stat-label">Объектов в базе</div>
+      </div>
+      <div>
+        <div class="stat-num">12</div>
+        <div class="stat-label">Лет на рынке</div>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Сделок закрыто успешно</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div style="max-width:1060px;margin:0 auto;">
+      <div class="section-head">
+        <p class="section-label">Что мы делаем</p>
+        <h2 class="section-title">Услуги агентства</h2>
+        <p class="section-sub">Полное сопровождение сделки — от подбора объекта до регистрации права собственности.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3>Продажа</h3>
+          <p>Оценим рыночную стоимость, подготовим объект и найдём покупателя в кратчайшие сроки.</p>
+        </div>
+        <div class="service-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <h3>Аренда</h3>
+          <p>Подберём жильё или коммерческое помещение под ваш запрос и бюджет. Юридически чисто.</p>
+        </div>
+        <div class="service-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3>Оценка</h3>
+          <p>Профессиональная оценка стоимости объекта с учётом рынка, локации и технического состояния.</p>
+        </div>
+        <div class="service-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Юридическое сопровождение</h3>
+          <p>Проверим историю объекта, подготовим договор и сопроводим сделку до её завершения.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews" id="reviews">
+    <div style="max-width:860px;margin:0 auto;">
+      <div class="section-head">
+        <p class="section-label">Клиенты о нас</p>
+        <h2 class="section-title">Отзывы</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar">АК</div>
+            <div>
+              <div class="review-name">Андрей Козлов</div>
+              <div class="review-stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="review-text">Продавали квартиру три месяца с другим агентством — безрезультатно. ПремьерЭстейт закрыли сделку за 3 недели. Менеджер всегда был на связи, объяснял каждый шаг. Рекомендую без сомнений.</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar">ЕМ</div>
+            <div>
+              <div class="review-name">Елена Морозова</div>
+              <div class="review-stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="review-text">Искала квартиру в аренду с офисом поблизости. Агент учёл все пожелания и предложил три отличных варианта. Заселилась уже через неделю после первого обращения. Отличный сервис!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <div style="max-width:600px;margin:0 auto;text-align:center;">
+      <p class="section-label">Бесплатно</p>
+      <h2 class="section-title">Получите консультацию эксперта</h2>
+      <p class="section-sub">Расскажите о задаче — перезвоним в течение 15 минут в рабочее время.</p>
+      <div class="cta-form">
+        <input type="text" placeholder="Ваше имя">
+        <input type="tel" placeholder="+7 (___) ___-__-__">
+        <button type="button">Перезвоните мне</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Демо-проект · <a href="../index.html">← Портфолио</a>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+  </script>
+</body>
+</html>
