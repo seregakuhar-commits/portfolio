@@ -6,23 +6,33 @@
   <title>ShopDemo — Каталог товаров</title>
   <style>
     :root {
-      --bg:     #f5f7fa;
-      --white:  #ffffff;
-      --dark:   #1a2332;
-      --accent: #2563eb;
-      --accent2:#1d4ed8;
-      --text:   #2c3344;
-      --muted:  #6b7280;
-      --border: #e2e8f0;
-      --success:#16a34a;
+      /* ink — text roles, light → strong emphasis */
+      --ink:        #2c3344;
+      --ink-strong: #1a2332;
+      --ink-muted:  #6b7280;
+
+      /* canvas & surfaces — what things sit on */
+      --canvas:       #f5f7fa;
+      --surface-1:    #ffffff;
+      --surface-dark: #1a2332;
+      --hairline:     #e2e8f0;
+
+      /* brand / interactive */
+      --primary:        #2563eb;
+      --primary-strong: #1d4ed8;
+      --on-primary:     #ffffff;
+
+      /* status */
+      --success: #16a34a;
+      --danger:  #dc2626;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: var(--canvas);
+      color: var(--ink);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -30,7 +40,7 @@
 
     /* ── HEADER ── */
     header {
-      background: var(--dark);
+      background: var(--surface-dark);
       padding: 0.9rem 2rem;
       display: flex;
       align-items: center;
@@ -44,12 +54,12 @@
     .header-logo {
       font-size: 1.25rem;
       font-weight: 800;
-      color: var(--white);
+      color: var(--on-primary);
       white-space: nowrap;
       letter-spacing: -0.3px;
     }
 
-    .header-logo span { color: var(--accent); }
+    .header-logo span { color: var(--primary); }
 
     .header-search {
       flex: 1;
@@ -64,7 +74,7 @@
       transform: translateY(-50%);
       width: 16px;
       height: 16px;
-      stroke: var(--muted);
+      stroke: var(--ink-muted);
       pointer-events: none;
     }
 
@@ -74,7 +84,7 @@
       border: none;
       border-radius: 6px;
       background: rgba(255,255,255,0.1);
-      color: var(--white);
+      color: var(--on-primary);
       font-size: 0.9rem;
       font-family: inherit;
       outline: none;
@@ -88,8 +98,8 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      background: var(--accent);
-      color: var(--white);
+      background: var(--primary);
+      color: var(--on-primary);
       padding: 0.55rem 1.1rem;
       border-radius: 6px;
       font-size: 0.85rem;
@@ -101,7 +111,7 @@
       margin-left: auto;
     }
 
-    .header-cart:hover { background: var(--accent2); }
+    .header-cart:hover { background: var(--primary-strong); }
 
     .header-cart svg {
       width: 16px;
@@ -110,8 +120,8 @@
     }
 
     #cart-count {
-      background: var(--white);
-      color: var(--accent);
+      background: var(--surface-1);
+      color: var(--primary);
       font-size: 0.75rem;
       font-weight: 800;
       min-width: 20px;
@@ -146,7 +156,7 @@
       bottom: 0;
       width: 380px;
       max-width: 92vw;
-      background: var(--white);
+      background: var(--surface-1);
       box-shadow: -8px 0 32px rgba(0,0,0,0.18);
       z-index: 201;
       display: flex;
@@ -162,12 +172,12 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--hairline);
     }
 
     .cart-panel-header h2 {
       font-size: 1.1rem;
-      color: var(--dark);
+      color: var(--ink-strong);
     }
 
     .cart-close {
@@ -175,14 +185,14 @@
       border: none;
       font-size: 1.4rem;
       line-height: 1;
-      color: var(--muted);
+      color: var(--ink-muted);
       cursor: pointer;
       padding: 0.25rem 0.5rem;
       border-radius: 6px;
       transition: background 0.15s, color 0.15s;
     }
 
-    .cart-close:hover { background: var(--bg); color: var(--text); }
+    .cart-close:hover { background: var(--canvas); color: var(--ink); }
 
     .cart-items {
       flex: 1;
@@ -195,7 +205,7 @@
       align-items: center;
       gap: 0.85rem;
       padding: 0.9rem 0;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--hairline);
     }
 
     .cart-item:last-child { border-bottom: none; }
@@ -212,7 +222,7 @@
     .cart-item-name {
       font-size: 0.85rem;
       font-weight: 700;
-      color: var(--dark);
+      color: var(--ink-strong);
       margin-bottom: 0.3rem;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -221,7 +231,7 @@
 
     .cart-item-price {
       font-size: 0.8rem;
-      color: var(--muted);
+      color: var(--ink-muted);
     }
 
     .cart-qty {
@@ -234,17 +244,17 @@
     .cart-qty button {
       width: 24px;
       height: 24px;
-      border: 1.5px solid var(--border);
-      background: var(--white);
+      border: 1.5px solid var(--hairline);
+      background: var(--surface-1);
       border-radius: 6px;
       font-size: 0.9rem;
       line-height: 1;
-      color: var(--text);
+      color: var(--ink);
       cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
 
-    .cart-qty button:hover { border-color: var(--accent); color: var(--accent); }
+    .cart-qty button:hover { border-color: var(--primary); color: var(--primary); }
 
     .cart-qty span {
       min-width: 20px;
@@ -256,7 +266,7 @@
     .cart-item-remove {
       background: none;
       border: none;
-      color: var(--muted);
+      color: var(--ink-muted);
       cursor: pointer;
       padding: 0.4rem;
       border-radius: 6px;
@@ -264,7 +274,7 @@
       flex-shrink: 0;
     }
 
-    .cart-item-remove:hover { background: var(--bg); color: #dc2626; }
+    .cart-item-remove:hover { background: var(--canvas); color: var(--danger); }
 
     .cart-item-remove svg { width: 16px; height: 16px; stroke: currentColor; }
 
@@ -276,15 +286,15 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
-      color: var(--muted);
+      color: var(--ink-muted);
     }
 
-    .cart-empty svg { width: 48px; height: 48px; stroke: var(--border); margin-bottom: 0.85rem; }
+    .cart-empty svg { width: 48px; height: 48px; stroke: var(--hairline); margin-bottom: 0.85rem; }
     .cart-empty p { font-size: 0.9rem; }
 
     .cart-footer {
       padding: 1.25rem 1.5rem;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--hairline);
     }
 
     .cart-total {
@@ -297,18 +307,18 @@
 
     .cart-total strong {
       font-size: 1.2rem;
-      color: var(--accent);
+      color: var(--primary);
     }
 
     .cart-clear {
       width: 100%;
       padding: 0.6rem;
       background: none;
-      border: 1.5px solid var(--border);
+      border: 1.5px solid var(--hairline);
       border-radius: 6px;
       font-size: 0.85rem;
       font-family: inherit;
-      color: var(--muted);
+      color: var(--ink-muted);
       cursor: pointer;
       transition: border-color 0.2s, color 0.2s;
     }
@@ -337,8 +347,8 @@
     }
 
     .sidebar-card {
-      background: var(--white);
-      border: 1px solid var(--border);
+      background: var(--surface-1);
+      border: 1px solid var(--hairline);
       border-radius: 10px;
       padding: 1.5rem;
     }
@@ -348,7 +358,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: var(--muted);
+      color: var(--ink-muted);
       margin-bottom: 0.85rem;
     }
 
@@ -368,7 +378,7 @@
       border-radius: 6px;
       font-size: 0.875rem;
       font-family: inherit;
-      color: var(--text);
+      color: var(--ink);
       cursor: pointer;
       transition: background 0.15s, color 0.15s;
       display: flex;
@@ -376,11 +386,11 @@
       justify-content: space-between;
     }
 
-    .cat-btn:hover { background: var(--bg); }
+    .cat-btn:hover { background: var(--canvas); }
 
     .cat-btn.active {
-      background: var(--accent);
-      color: var(--white);
+      background: var(--primary);
+      color: var(--on-primary);
       font-weight: 600;
     }
 
@@ -401,21 +411,21 @@
     .price-inputs input {
       width: 100%;
       padding: 0.45rem 0.6rem;
-      border: 1.5px solid var(--border);
+      border: 1.5px solid var(--hairline);
       border-radius: 6px;
       font-size: 0.82rem;
       font-family: inherit;
-      color: var(--text);
+      color: var(--ink);
       text-align: center;
       outline: none;
       transition: border-color 0.2s;
     }
 
-    .price-inputs input:focus { border-color: var(--accent); }
+    .price-inputs input:focus { border-color: var(--primary); }
 
     input[type="range"] {
       width: 100%;
-      accent-color: var(--accent);
+      accent-color: var(--primary);
       cursor: pointer;
     }
 
@@ -423,7 +433,7 @@
       display: flex;
       justify-content: space-between;
       font-size: 0.78rem;
-      color: var(--muted);
+      color: var(--ink-muted);
       margin-top: 0.35rem;
     }
 
@@ -431,12 +441,12 @@
     .sort-select {
       width: 100%;
       padding: 0.5rem 0.75rem;
-      border: 1.5px solid var(--border);
+      border: 1.5px solid var(--hairline);
       border-radius: 6px;
       font-size: 0.875rem;
       font-family: inherit;
-      color: var(--text);
-      background: var(--white);
+      color: var(--ink);
+      background: var(--surface-1);
       outline: none;
       cursor: pointer;
       -webkit-appearance: none;
@@ -444,23 +454,23 @@
       transition: border-color 0.2s;
     }
 
-    .sort-select:focus { border-color: var(--accent); }
+    .sort-select:focus { border-color: var(--primary); }
 
     /* reset button */
     .reset-btn {
       width: 100%;
       padding: 0.55rem;
       background: none;
-      border: 1.5px solid var(--border);
+      border: 1.5px solid var(--hairline);
       border-radius: 6px;
       font-size: 0.85rem;
       font-family: inherit;
-      color: var(--muted);
+      color: var(--ink-muted);
       cursor: pointer;
       transition: border-color 0.2s, color 0.2s;
     }
 
-    .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .reset-btn:hover { border-color: var(--primary); color: var(--primary); }
 
     /* ── PRODUCTS ── */
     .products-area { flex: 1; min-width: 0; }
@@ -474,10 +484,10 @@
 
     .products-count {
       font-size: 0.9rem;
-      color: var(--muted);
+      color: var(--ink-muted);
     }
 
-    .products-count strong { color: var(--text); }
+    .products-count strong { color: var(--ink); }
 
     .products-grid {
       display: grid;
@@ -486,8 +496,8 @@
     }
 
     .product-card {
-      background: var(--white);
-      border: 1px solid var(--border);
+      background: var(--surface-1);
+      border: 1px solid var(--hairline);
       border-radius: 10px;
       overflow: hidden;
       display: flex;
@@ -527,14 +537,14 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.8px;
-      color: var(--muted);
+      color: var(--ink-muted);
       margin-bottom: 0.35rem;
     }
 
     .product-name {
       font-size: 0.9rem;
       font-weight: 700;
-      color: var(--dark);
+      color: var(--ink-strong);
       margin-bottom: 0.4rem;
       line-height: 1.35;
     }
@@ -542,7 +552,7 @@
     .product-price {
       font-size: 1.05rem;
       font-weight: 800;
-      color: var(--accent);
+      color: var(--primary);
       margin-top: auto;
       padding-top: 0.6rem;
     }
@@ -551,8 +561,8 @@
       width: 100%;
       margin-top: 0.6rem;
       padding: 0.6rem;
-      background: var(--accent);
-      color: var(--white);
+      background: var(--primary);
+      color: var(--on-primary);
       border: none;
       border-radius: 6px;
       font-size: 0.82rem;
@@ -568,7 +578,7 @@
 
     .add-to-cart svg { width: 14px; height: 14px; stroke: currentColor; }
 
-    .add-to-cart:hover { background: var(--accent2); }
+    .add-to-cart:hover { background: var(--primary-strong); }
 
     .add-to-cart.added {
       background: var(--success);
@@ -579,22 +589,22 @@
       display: none;
       text-align: center;
       padding: 4rem 1rem;
-      color: var(--muted);
+      color: var(--ink-muted);
     }
 
     .empty-state svg {
       width: 56px;
       height: 56px;
-      stroke: var(--border);
+      stroke: var(--hairline);
       margin: 0 auto 1rem;
     }
 
-    .empty-state h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 0.4rem; }
+    .empty-state h3 { font-size: 1.1rem; color: var(--ink); margin-bottom: 0.4rem; }
     .empty-state p { font-size: 0.9rem; }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--dark);
+      background: var(--surface-dark);
       color: rgba(255,255,255,0.3);
       text-align: center;
       padding: 1.25rem 2rem;
