@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://seregakuhar-commits.github.io/portfolio/sitemap.xml

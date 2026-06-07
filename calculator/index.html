@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Калькулятор стоимости ремонта онлайн — рассчитайте примерную цену косметического, капитального или ремонта под ключ по площади помещения.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%231a2332%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f0a500%22>К</text></svg>">
   <title>Калькулятор ремонта</title>
+  <link rel="canonical" href="https://seregakuhar-commits.github.io/portfolio/calculator/">
+  <meta property="og:title" content="Калькулятор ремонта">
+  <meta property="og:description" content="Калькулятор стоимости ремонта онлайн — рассчитайте примерную цену косметического, капитального или ремонта под ключ по площади помещения.">
+  <meta property="og:image" content="https://seregakuhar-commits.github.io/portfolio/calculator/og-image.png">
+  <meta property="og:type" content="website">
   <style>
     :root {
       --dark: #1a2332;
@@ -100,11 +107,11 @@
       padding-top: 1.5rem;
     }
 
-    .price-table h3 {
+    .price-table h2 {
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: #999;
+      color: #757575;
       margin-bottom: 0.75rem;
     }
 
@@ -120,17 +127,17 @@
 
     footer {
       margin-top: 1.5rem;
-      color: #aaa;
+      color: #666666;
       font-size: 0.85rem;
       text-align: center;
     }
 
-    footer a { color: var(--orange); text-decoration: none; }
+    footer a { color: #996100; text-decoration: underline; }
   </style>
 </head>
 <body>
 
-  <div class="card">
+  <main class="card">
     <div class="card-header">
       <h1>Калькулятор ремонта</h1>
       <p>Рассчитайте стоимость онлайн</p>
@@ -156,12 +163,12 @@
     </div>
 
     <div class="price-table">
-      <h3>Прайс-лист</h3>
+      <h2>Прайс-лист</h2>
       <div class="price-row"><span>Косметический</span><span>от 3 000 ₽/м²</span></div>
       <div class="price-row"><span>Капитальный</span><span>от 6 000 ₽/м²</span></div>
       <div class="price-row"><span>Под ключ</span><span>от 10 000 ₽/м²</span></div>
     </div>
-  </div>
+  </main>
 
   <footer>
     Демо-проект · <a href="../index.html">← Портфолио</a>

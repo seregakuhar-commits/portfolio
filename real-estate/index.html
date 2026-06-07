@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ПремьерЭстейт — агентство недвижимости в Москве: продажа, аренда и оценка квартир, домов и коммерческой недвижимости. Более 850 объектов в базе.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230f1c2d%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23b8934a%22>П</text></svg>">
   <title>ПремьерЭстейт — Агентство недвижимости</title>
+  <link rel="canonical" href="https://seregakuhar-commits.github.io/portfolio/real-estate/">
+  <meta property="og:title" content="ПремьерЭстейт — Агентство недвижимости">
+  <meta property="og:description" content="ПремьерЭстейт — агентство недвижимости в Москве: продажа, аренда и оценка квартир, домов и коммерческой недвижимости. Более 850 объектов в базе.">
+  <meta property="og:image" content="https://seregakuhar-commits.github.io/portfolio/real-estate/og-image.png">
+  <meta property="og:type" content="website">
   <style>
     :root {
       --bg:     #f0f4f8;
@@ -183,7 +190,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 3px;
-      color: var(--accent);
+      color: #866b35;
       margin-bottom: 0.6rem;
     }
 
@@ -197,7 +204,7 @@
 
     .section-sub {
       font-size: 0.95rem;
-      color: var(--muted);
+      color: #69707d;
       max-width: 480px;
     }
 
@@ -496,13 +503,13 @@
     /* ── FOOTER ── */
     footer {
       background: #0a1520;
-      color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.48);
       text-align: center;
       padding: 1.5rem 2rem;
       font-size: 0.85rem;
     }
 
-    footer a { color: var(--accent); }
+    footer a { color: var(--accent); text-decoration: underline; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 860px) {
@@ -531,6 +538,8 @@
     </ul>
   </nav>
 
+  <main>
+
   <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
@@ -538,7 +547,7 @@
       <h1>Найдите <span>дом</span>,<br>который вы заслуживаете</h1>
       <p class="hero-sub">Более 850 объектов в базе. Покупка, продажа и аренда — с профессиональной поддержкой на каждом этапе.</p>
       <div class="hero-search">
-        <select>
+        <select aria-label="Тип объекта">
           <option value="">Тип объекта</option>
           <option>Квартира</option>
           <option>Дом / Коттедж</option>
@@ -546,7 +555,7 @@
           <option>Земельный участок</option>
         </select>
         <input type="text" placeholder="Район или адрес">
-        <select>
+        <select aria-label="Бюджет">
           <option value="">Бюджет</option>
           <option>до 5 млн ₽</option>
           <option>до 10 млн ₽</option>
@@ -766,6 +775,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <footer>
     Демо-проект · <a href="../index.html">← Портфолио</a>

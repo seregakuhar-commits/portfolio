@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ShopDemo — каталог товаров с фильтрами по категориям и цене, сортировкой и корзиной. Демо интернет-магазина электроники, одежды и товаров для дома.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%231a2332%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%232563eb%22>S</text></svg>">
   <title>ShopDemo — Каталог товаров</title>
+  <link rel="canonical" href="https://seregakuhar-commits.github.io/portfolio/catalog/">
+  <meta property="og:title" content="ShopDemo — Каталог товаров">
+  <meta property="og:description" content="ShopDemo — каталог товаров с фильтрами по категориям и цене, сортировкой и корзиной. Демо интернет-магазина электроники, одежды и товаров для дома.">
+  <meta property="og:image" content="https://seregakuhar-commits.github.io/portfolio/catalog/og-image.png">
+  <meta property="og:type" content="website">
   <style>
     :root {
       /* ink — text roles, light → strong emphasis */
@@ -396,7 +403,11 @@
 
     .cat-count {
       font-size: 0.72rem;
-      opacity: 0.6;
+      color: var(--ink-muted);
+    }
+
+    .cat-btn.active .cat-count {
+      color: rgba(255,255,255,0.94);
     }
 
     /* price range */
@@ -659,13 +670,13 @@
     /* ── FOOTER ── */
     footer {
       background: var(--surface-dark);
-      color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.5);
       text-align: center;
       padding: 1.25rem 2rem;
       font-size: 0.85rem;
     }
 
-    footer a { color: #2563eb; }
+    footer a { color: #5c8bf0; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 860px) {
@@ -688,7 +699,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
       </svg>
-      <input type="text" id="search-input" placeholder="Поиск товаров...">
+      <input type="text" id="search-input" placeholder="Поиск товаров..." aria-label="Поиск товаров">
     </div>
     <button class="header-cart" id="cart-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -722,7 +733,7 @@
   </aside>
 
   <!-- LAYOUT -->
-  <div class="layout">
+  <main class="layout">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
@@ -740,15 +751,15 @@
         <p class="filter-title">Цена</p>
         <div class="price-range">
           <div class="price-inputs">
-            <input type="number" id="price-min" value="0" min="0" max="10000" placeholder="От">
-            <input type="number" id="price-max" value="6000" min="0" max="6000" placeholder="До">
+            <input type="number" id="price-min" value="0" min="0" max="10000" placeholder="От" aria-label="Минимальная цена">
+            <input type="number" id="price-max" value="6000" min="0" max="6000" placeholder="До" aria-label="Максимальная цена">
           </div>
-          <input type="range" id="price-slider" min="0" max="6000" value="6000" step="50">
+          <input type="range" id="price-slider" min="0" max="6000" value="6000" step="50" aria-label="Максимальная цена (ползунок)">
           <div class="price-labels"><span>0 ₽</span><span>6 000 ₽</span></div>
         </div>
 
         <p class="filter-title">Сортировка</p>
-        <select class="sort-select" id="sort-select">
+        <select class="sort-select" id="sort-select" aria-label="Сортировка товаров">
           <option value="default">По умолчанию</option>
           <option value="price-asc">Цена ↑</option>
           <option value="price-desc">Цена ↓</option>
@@ -999,7 +1010,7 @@
       </div>
 
     </div>
-  </div>
+  </main>
 
   <footer>
     Демо-проект · <a href="../index.html">← Портфолио</a>
