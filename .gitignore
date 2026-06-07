@@ -3,3 +3,6 @@ Thumbs.db
 .superpowers/
 nfc-card-product/
 _products/
+.agents/
+.claude/
+skills-lock.json

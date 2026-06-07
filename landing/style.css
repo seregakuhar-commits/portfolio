@@ -252,7 +252,7 @@ textarea { min-height: 120px; resize: vertical; }
 /* FOOTER */
 footer {
   background: #0f1824;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.6);
   text-align: center;
   padding: 1.5rem;
   font-size: 0.9rem;
