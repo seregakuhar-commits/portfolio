@@ -11,6 +11,9 @@
   <meta property="og:description" content="ПремьерЭстейт — агентство недвижимости в Москве: продажа, аренда и оценка квартир, домов и коммерческой недвижимости. Более 850 объектов в базе.">
   <meta property="og:image" content="https://seregakuhar-commits.github.io/portfolio/real-estate/og-image.png">
   <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg:     #f0f4f8;
@@ -486,6 +489,10 @@
     .cta-form input::placeholder { color: rgba(255,255,255,0.35); }
     .cta-form input:focus { border-color: var(--accent); }
 
+    .cta-status { display: none; margin-top: 1rem; font-size: 0.95rem; }
+    .cta-status.success { display: block; color: #7ee2a8; }
+    .cta-status.error { display: block; color: #ffb4a2; }
+
     .cta-form button {
       background: var(--accent);
       color: var(--dark);
@@ -523,6 +530,14 @@
       .services-grid,
       .reviews-grid,
       .stats-grid { grid-template-columns: 1fr; }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
@@ -562,7 +577,7 @@
           <option>до 20 млн ₽</option>
           <option>Без ограничений</option>
         </select>
-        <button type="button">
+        <button type="button" id="search-btn">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
           Найти
         </button>
@@ -768,11 +783,12 @@
       <p class="section-label">Бесплатно</p>
       <h2 class="section-title">Получите консультацию эксперта</h2>
       <p class="section-sub">Расскажите о задаче — перезвоним в течение 15 минут в рабочее время.</p>
-      <div class="cta-form">
-        <input type="text" placeholder="Ваше имя">
-        <input type="tel" placeholder="+7 (___) ___-__-__">
-        <button type="button">Перезвоните мне</button>
+      <div class="cta-form" id="cta-form">
+        <input type="text" id="cta-name" placeholder="Ваше имя">
+        <input type="tel" id="cta-phone" placeholder="+7 (___) ___-__-__">
+        <button type="button" id="cta-btn">Перезвоните мне</button>
       </div>
+      <p class="cta-status" id="cta-status" role="status" aria-live="polite"></p>
     </div>
   </section>
 
@@ -786,6 +802,29 @@
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Поиск: плавный переход к объектам
+    document.getElementById('search-btn').addEventListener('click', () => {
+      document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Заявка на обратный звонок
+    const ctaBtn = document.getElementById('cta-btn');
+    const ctaStatus = document.getElementById('cta-status');
+    ctaBtn.addEventListener('click', () => {
+      const name = document.getElementById('cta-name').value.trim();
+      const phone = document.getElementById('cta-phone').value.trim();
+      if (!name || !phone) {
+        ctaStatus.textContent = 'Заполните имя и телефон.';
+        ctaStatus.className = 'cta-status error';
+        return;
+      }
+      // Здесь подключается отправка на сервер / CRM
+      document.getElementById('cta-name').value = '';
+      document.getElementById('cta-phone').value = '';
+      ctaStatus.textContent = 'Спасибо, ' + name + '! Перезвоним в течение 15 минут в рабочее время.';
+      ctaStatus.className = 'cta-status success';
     });
   </script>
 </body>

@@ -184,6 +184,43 @@
     .form-check { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; }
     .form-check input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--navy); }
     .settings-divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .dash-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      /* сайдбар становится нижней панелью */
+      .sidebar {
+        top: auto; bottom: 0; left: 0; right: 0;
+        width: 100%; height: 56px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0;
+        border-top: 1px solid var(--border);
+        z-index: 50;
+      }
+      .nav-tooltip { display: none; }
+      .main { margin-left: 0; padding: 16px; padding-bottom: 76px; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      /* таблицы скроллятся по горизонтали */
+      .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .table-wrap table { min-width: 560px; }
+      .topbar-search { max-width: 160px; }
+    }
+
+    @media (max-width: 480px) {
+      .stat-grid { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: 1fr; }
+      .settings-card { max-width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
@@ -328,7 +365,7 @@
         </div>
       </section>
       <section id="orders" class="section"><div class="page-header">
-      <h1 class="page-title">Заказы</h1>
+      <h2 class="page-title">Заказы</h2>
       <p class="page-sub">Все заказы за последние 60 дней</p>
     </div>
     <div class="filter-bar">
@@ -346,12 +383,12 @@
       </table>
     </div></section>
       <section id="products" class="section"><div class="page-header">
-      <h1 class="page-title">Товары</h1>
+      <h2 class="page-title">Товары</h2>
       <p class="page-sub">Каталог продуктов и услуг</p>
     </div>
     <div class="products-grid" id="products-grid"></div></section>
       <section id="clients" class="section"><div class="page-header">
-      <h1 class="page-title">Клиенты</h1>
+      <h2 class="page-title">Клиенты</h2>
       <p class="page-sub">База клиентов</p>
     </div>
     <div class="table-wrap">
@@ -363,7 +400,7 @@
       </table>
     </div></section>
       <section id="settings" class="section"><div class="page-header">
-      <h1 class="page-title">Настройки</h1>
+      <h2 class="page-title">Настройки</h2>
       <p class="page-sub">Параметры системы</p>
     </div>
     <div class="card settings-card">

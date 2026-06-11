@@ -150,3 +150,11 @@ footer a { color: var(--orange); text-decoration: underline; }
 @media (max-width: 480px) {
   .cards-grid { grid-template-columns: 1fr; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

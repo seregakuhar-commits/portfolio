@@ -11,6 +11,9 @@
   <meta property="og:description" content="Калькулятор стоимости ремонта онлайн — рассчитайте примерную цену косметического, капитального или ремонта под ключ по площади помещения.">
   <meta property="og:image" content="https://seregakuhar-commits.github.io/portfolio/calculator/og-image.png">
   <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --dark: #1a2332;
@@ -133,6 +136,14 @@
     }
 
     footer a { color: #996100; text-decoration: underline; }
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 <body>

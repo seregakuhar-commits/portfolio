@@ -11,13 +11,19 @@
   <meta property="og:description" content="СтройМастер — ремонт квартир и офисов под ключ в Москве с 2010 года. Гарантия 3 года, портфолио работ, заявка онлайн.">
   <meta property="og:image" content="https://seregakuhar-commits.github.io/portfolio/landing/og-image.png">
   <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <nav>
     <a class="nav-logo" href="#">СтройМастер</a>
-    <ul class="nav-links">
+    <button class="nav-toggle" aria-label="Открыть меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
       <li><a href="#services">Услуги</a></li>
       <li><a href="#portfolio">Портфолио</a></li>
       <li><a href="#contacts">Контакты</a></li>
@@ -59,15 +65,15 @@
     <h2 class="section-title">Наши работы</h2>
     <div class="portfolio-grid">
       <div class="portfolio-item">
-        <img src="https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800&q=80" alt="Ремонт квартиры">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=800&q=80" alt="Ремонт квартиры">
         <div class="portfolio-label">Квартира, 78 м²</div>
       </div>
       <div class="portfolio-item">
-        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="Кухня после ремонта">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="Кухня после ремонта">
         <div class="portfolio-label">Кухня, 22 м²</div>
       </div>
       <div class="portfolio-item">
-        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80" alt="Офис после ремонта">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80" alt="Офис после ремонта">
         <div class="portfolio-label">Офис, 120 м²</div>
       </div>
     </div>
@@ -82,11 +88,12 @@
         <p><strong>Адрес:</strong><br>Москва, ул. Строителей, 15</p>
         <p><strong>Режим работы:</strong><br>Пн–Пт: 9:00–18:00</p>
       </div>
-      <form>
-        <input type="text" placeholder="Ваше имя">
-        <input type="tel" placeholder="Телефон">
-        <textarea placeholder="Опишите задачу"></textarea>
+      <form id="contact-form" novalidate>
+        <input type="text" name="name" placeholder="Ваше имя" required>
+        <input type="tel" name="phone" placeholder="Телефон" required>
+        <textarea name="task" placeholder="Опишите задачу"></textarea>
         <button type="submit" class="btn">Отправить заявку</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -99,5 +106,38 @@
 
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" integrity="sha384-uTYyvsSSUZeaPhb5RbKlQa0zY/WpX/QHfvg2mczXyBQOpkWPEDy9lczyp+w7SKXu" crossorigin="anonymous"></script>
   <script>lucide.createIcons();</script>
+  <script>
+    // Мобильное меню
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open);
+    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    // Форма заявки
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = form.name.value.trim();
+      const phone = form.phone.value.trim();
+      if (!name || !phone) {
+        status.textContent = 'Пожалуйста, заполните имя и телефон.';
+        status.className = 'form-status error';
+        return;
+      }
+      // Здесь подключается отправка на сервер / Telegram-бот / email
+      form.reset();
+      status.textContent = 'Спасибо, ' + name + '! Заявка принята — перезвоним в рабочее время.';
+      status.className = 'form-status success';
+    });
+  </script>
 </body>
 </html>

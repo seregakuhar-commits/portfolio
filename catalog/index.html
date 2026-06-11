@@ -11,6 +11,9 @@
   <meta property="og:description" content="ShopDemo — каталог товаров с фильтрами по категориям и цене, сортировкой и корзиной. Демо интернет-магазина электроники, одежды и товаров для дома.">
   <meta property="og:image" content="https://seregakuhar-commits.github.io/portfolio/catalog/og-image.png">
   <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       /* ink — text roles, light → strong emphasis */
@@ -688,13 +691,21 @@
       .sidebar { width: 100%; }
       .header-search { display: none; }
     }
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
 
   <!-- HEADER -->
   <header>
-    <div class="header-logo"><span>Shop</span>Demo</div>
+    <h1 class="header-logo"><span>Shop</span>Demo</h1>
     <div class="header-search">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>

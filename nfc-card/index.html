@@ -13,6 +13,9 @@
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://seregakuhar-commits.github.io/portfolio/nfc-card/">
   <meta property="og:image" content="https://seregakuhar-commits.github.io/portfolio/nfc-card/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       /* ✏️ ИЗМЕНИТЬ: основные цвета */
@@ -593,6 +596,14 @@
     }
 
     footer span { color: var(--gold); }
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
