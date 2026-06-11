@@ -118,32 +118,19 @@
     }
 
     /* ─── НАВЫКИ ─── */
-    .skill-item {
-      margin-bottom: 1rem;
-    }
-
-    .skill-header {
+    .skill-tags {
       display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: var(--gray);
-      margin-bottom: 0.35rem;
+      flex-wrap: wrap;
+      gap: 0.4rem;
     }
 
-    .skill-pct {
+    .skill-tags span {
+      font-size: 0.75rem;
       color: var(--gold);
-    }
-
-    .skill-bar {
-      height: 3px;
-      background: var(--border);
-      border-radius: 2px;
-    }
-
-    .skill-fill {
-      height: 100%;
-      background: var(--gold);
-      border-radius: 2px;
+      border: 1px solid rgba(201, 169, 110, 0.35);
+      border-radius: 4px;
+      padding: 0.25rem 0.6rem;
+      line-height: 1.4;
     }
 
     /* ─── ЯЗЫКИ ─── */
@@ -373,27 +360,11 @@
 
       <hr class="sidebar-divider">
       <span class="label">Навыки</span>
-      <div class="skill-item">
-        <div class="skill-header"><span>HTML / CSS</span><span class="skill-pct">95%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+      <div class="skill-tags">
+        <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+        <span>React</span><span>Git</span><span>Figma</span>
+        <span>Адаптивная вёрстка</span><span>Доступность</span><span>REST API</span>
       </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>JavaScript</span><span class="skill-pct">80%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>React</span><span class="skill-pct">70%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>Figma</span><span class="skill-pct">65%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>Git</span><span class="skill-pct">75%</span></div>
-        <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
-      </div>
-
       <hr class="sidebar-divider">
       <span class="label">Языки</span>
       <div class="lang-item"><span>Русский</span><span class="lang-level">Родной</span></div>
