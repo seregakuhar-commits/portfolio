@@ -1,15 +1,15 @@
 :root {
-  --dark: #1a2332;
+  --dark: #17191d;
   --white: #ffffff;
-  --orange: #f0a500;
-  --gray: #f5f7fa;
+  --orange: #ffc400;
+  --gray: #f4f4f2;
   --text: #333;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   color: var(--text);
   line-height: 1.6;
 }
@@ -50,7 +50,7 @@ nav {
 
 /* HERO */
 .hero {
-  background: linear-gradient(135deg, var(--dark) 0%, #2d3f57 100%);
+  background: linear-gradient(135deg, var(--dark) 0%, #2a2d33 100%);
   min-height: 85vh;
   display: flex;
   align-items: center;
@@ -91,7 +91,7 @@ nav {
 
 .btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(240, 165, 0, 0.45);
+  box-shadow: 0 8px 24px rgba(255, 196, 0, 0.4);
 }
 
 /* SECTIONS */
@@ -251,13 +251,27 @@ textarea { min-height: 120px; resize: vertical; }
 
 /* FOOTER */
 footer {
-  background: #0f1824;
+  background: #101114;
   color: rgba(255,255,255,0.6);
   text-align: center;
   padding: 1.5rem;
   font-size: 0.9rem;
 }
 
+
+/* TYPE: индустриальные заголовки */
+.hero h1, .section-title {
+  font-family: 'Oswald', 'Manrope', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nav-logo {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 /* BURGER */
 .nav-toggle {
   display: none;
