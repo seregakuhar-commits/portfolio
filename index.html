@@ -10,6 +10,10 @@
   <meta property="og:description" content="Портфолио Сергея — frontend-разработчика. Демо-проекты: лендинги, каталоги, калькуляторы и панели управления на чистом HTML, CSS и JavaScript.">
   <meta property="og:image" content="https://seregakuhar-commits.github.io/portfolio/og-image.png">
   <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%231a2332%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f0a500%22>С</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --dark: #1a2332;
@@ -145,23 +149,22 @@
 
     /* PREVIEW AREA */
     .project-preview {
+      position: relative;
+      aspect-ratio: 640 / 336;
       background: var(--dark);
-      height: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.25s ease;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
     }
 
-    .project-preview svg {
-      width: 44px;
-      height: 44px;
-      stroke: rgba(255,255,255,0.35);
-      transition: stroke 0.25s ease;
+    .project-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
     }
 
-    .project-card:hover .project-preview { background: #1e2d40; }
-    .project-card:hover .project-preview svg { stroke: var(--orange); }
+    .project-card:hover .project-preview img { transform: scale(1.04); }
 
     /* CARD BODY */
     .project-body {
@@ -304,13 +307,9 @@
     <h1>Веб-разработчик</h1>
     <p class="header-sub">HTML, CSS, JavaScript — вёрстка и фронтенд. Быстро, чисто, адаптивно.</p>
     <div class="header-links">
-      <a class="link-btn link-github" href="https://github.com/seregakuhar-commits" target="_blank">
+      <a class="link-btn link-github" href="https://github.com/seregakuhar-commits" target="_blank" rel="noopener noreferrer">
         <i data-lucide="github"></i>
         GitHub
-      </a>
-      <a class="link-btn link-kwork" href="#" title="Скоро">
-        <i data-lucide="briefcase"></i>
-        Kwork (скоро)
       </a>
     </div>
   </header>
@@ -320,7 +319,7 @@
 
       <a class="project-card" href="landing/index.html">
         <div class="project-preview">
-          <i data-lucide="layout"></i>
+          <img src="previews/landing.webp" alt="Скриншот: Лендинг строительной компании" width="640" height="336" loading="lazy">
         </div>
         <div class="project-body">
           <span class="project-tag">HTML + CSS</span>
@@ -333,7 +332,7 @@
 
       <a class="project-card" href="calculator/index.html">
         <div class="project-preview">
-          <i data-lucide="calculator"></i>
+          <img src="previews/calculator.webp" alt="Скриншот: Калькулятор стоимости ремонта" width="640" height="336" loading="lazy">
         </div>
         <div class="project-body">
           <span class="project-tag">HTML + JS</span>
@@ -346,7 +345,7 @@
 
       <a class="project-card" href="cards/index.html">
         <div class="project-preview">
-          <i data-lucide="mouse-pointer-2"></i>
+          <img src="previews/cards.webp" alt="Скриншот: Карточки услуг с hover-эффектами" width="640" height="336" loading="lazy">
         </div>
         <div class="project-body">
           <span class="project-tag">HTML + CSS</span>
@@ -359,7 +358,7 @@
 
       <a class="project-card" href="beauty-salon/index.html">
         <div class="project-preview">
-          <i data-lucide="sparkles"></i>
+          <img src="previews/beauty-salon.webp" alt="Скриншот: Лендинг салона красоты" width="640" height="336" loading="lazy">
         </div>
         <div class="project-body">
           <span class="project-tag">HTML + CSS + JS</span>
@@ -372,7 +371,7 @@
 
       <a class="project-card" href="cv/index.html">
         <div class="project-preview">
-          <i data-lucide="file-text"></i>
+          <img src="previews/cv.webp" alt="Скриншот: CV / резюме" width="640" height="336" loading="lazy">
         </div>
         <div class="project-body">
           <span class="project-tag">HTML + CSS + JS</span>
@@ -383,9 +382,9 @@
         </div>
       </a>
 
-      <a class="project-card" href="admin/index.html" target="_blank">
+      <a class="project-card" href="admin/index.html" target="_blank" rel="noopener noreferrer">
         <div class="project-preview">
-          <i data-lucide="layout-dashboard"></i>
+          <img src="previews/admin.webp" alt="Скриншот: Админ-панель с аналитикой" width="640" height="336" loading="lazy">
         </div>
         <div class="project-body">
           <span class="project-tag">HTML + CSS + JS</span>
@@ -396,9 +395,9 @@
         </div>
       </a>
 
-      <a class="project-card" href="nfc-card/index.html" target="_blank">
+      <a class="project-card" href="nfc-card/index.html" target="_blank" rel="noopener noreferrer">
         <div class="project-preview">
-          <i data-lucide="credit-card"></i>
+          <img src="previews/nfc-card.webp" alt="Скриншот: Лендинг NFC-визиток" width="640" height="336" loading="lazy">
         </div>
         <div class="project-body">
           <span class="project-tag">HTML + CSS + JS</span>
@@ -411,7 +410,7 @@
 
       <a class="project-card" href="cafe/index.html">
         <div class="project-preview">
-          <i data-lucide="coffee"></i>
+          <img src="previews/cafe.webp" alt="Скриншот: Лендинг кафе" width="640" height="336" loading="lazy">
         </div>
         <div class="project-body">
           <span class="project-tag">HTML + CSS + JS</span>
@@ -424,7 +423,7 @@
 
       <a class="project-card" href="real-estate/index.html">
         <div class="project-preview">
-          <i data-lucide="building-2"></i>
+          <img src="previews/real-estate.webp" alt="Скриншот: Лендинг агентства недвижимости" width="640" height="336" loading="lazy">
         </div>
         <div class="project-body">
           <span class="project-tag">HTML + CSS + JS</span>
@@ -437,7 +436,7 @@
 
       <a class="project-card" href="catalog/index.html">
         <div class="project-preview">
-          <i data-lucide="shopping-cart"></i>
+          <img src="previews/catalog.webp" alt="Скриншот: Каталог товаров с фильтрами" width="640" height="336" loading="lazy">
         </div>
         <div class="project-body">
           <span class="project-tag">HTML + CSS + JS</span>
@@ -456,7 +455,7 @@
         <p>Начинающий разработчик с реальными проектами в портфолио. Беру немного, делаю качественно — строю репутацию на результате.</p>
       </div>
       <div class="about-contacts">
-        <a class="contact-btn" href="https://t.me/SeregaKuhar" target="_blank">
+        <a class="contact-btn" href="https://t.me/SeregaKuhar" target="_blank" rel="noopener noreferrer">
           <i data-lucide="send"></i>
           @SeregaKuhar
         </a>
@@ -466,7 +465,7 @@
 
   </main>
 
-  <footer>Сергей · Веб-разработчик · <a href="https://t.me/SeregaKuhar" target="_blank">@SeregaKuhar</a></footer>
+  <footer>Сергей · Веб-разработчик · <a href="https://t.me/SeregaKuhar" target="_blank" rel="noopener noreferrer">@SeregaKuhar</a></footer>
 
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" integrity="sha384-uTYyvsSSUZeaPhb5RbKlQa0zY/WpX/QHfvg2mczXyBQOpkWPEDy9lczyp+w7SKXu" crossorigin="anonymous"></script>
   <script>lucide.createIcons();</script>
