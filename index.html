@@ -3,480 +3,359 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Портфолио — Сергей</title>
-  <meta name="description" content="Портфолио Сергея — frontend-разработчика. Демо-проекты: лендинги, каталоги, калькуляторы и панели управления на чистом HTML, CSS и JavaScript.">
+  <script>document.documentElement.classList.add('js');</script>
+  <title>Создаю современные сайты для бизнеса — Сергей</title>
+  <meta name="description" content="Создаю современные сайты для бизнеса. Покажу примеры работ и помогу понять, какой сайт подойдёт под вашу задачу. Расскажите об идее — обсудим, как лучше её реализовать.">
   <link rel="canonical" href="https://seregakuhar-commits.github.io/portfolio/">
-  <meta property="og:title" content="Портфолио — Сергей">
-  <meta property="og:description" content="Портфолио Сергея — frontend-разработчика. Демо-проекты: лендинги, каталоги, калькуляторы и панели управления на чистом HTML, CSS и JavaScript.">
+  <meta property="og:title" content="Создаю современные сайты для бизнеса — Сергей">
+  <meta property="og:description" content="Современные сайты для бизнеса. Примеры работ и спокойный, понятный процесс. Расскажите об идее — обсудим реализацию.">
   <meta property="og:image" content="https://seregakuhar-commits.github.io/portfolio/og-image.png">
   <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%231a2332%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f0a500%22>С</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%232563eb%22/><text x=%2250%22 y=%2270%22 font-size=%2262%22 font-family=%22Arial%22 font-weight=%22700%22 text-anchor=%22middle%22 fill=%22%23ffffff%22>С</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --dark: #1a2332;
-      --orange: #f0a500;
-      --gray: #f4f5f7;
-      --white: #ffffff;
-      --border: #e2e4e8;
-      --text: #2c3344;
-      --text-light: #6b7280;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--gray);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    /* HEADER */
-    header {
-      background: var(--dark);
-      padding: 3.5rem 2rem 3rem;
-      text-align: center;
-    }
-
-    .header-label {
-      display: inline-block;
-      color: var(--orange);
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      margin-bottom: 1rem;
-    }
-
-    header h1 {
-      color: var(--white);
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      margin-bottom: 0.75rem;
-    }
-
-    .header-sub {
-      color: rgba(255,255,255,0.5);
-      font-size: 0.95rem;
-      max-width: 440px;
-      margin: 0 auto 2rem;
-    }
-
-    .header-links {
-      display: flex;
-      gap: 0.75rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1.4rem;
-      border-radius: 6px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-
-    .link-btn:hover { opacity: 0.85; }
-    .link-btn svg { width: 16px; height: 16px; stroke: currentColor; }
-
-    .link-github {
-      background: rgba(255,255,255,0.1);
-      color: var(--white);
-      border: 1px solid rgba(255,255,255,0.18);
-    }
-
-    .link-kwork {
-      background: var(--orange);
-      color: var(--dark);
-    }
-
-    /* MAIN */
-    main {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 3rem 2rem 4rem;
-    }
-
-    /* PROJECTS GRID */
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-
-    /* PROJECT CARD */
-    .project-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 100%;
-      background: var(--orange);
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      z-index: 1;
-    }
-
-    .project-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
-      border-color: transparent;
-    }
-
-    .project-card:hover::before { opacity: 1; }
-
-    /* PREVIEW AREA */
-    .project-preview {
-      position: relative;
-      aspect-ratio: 640 / 336;
-      background: var(--dark);
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .project-preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-
-    .project-card:hover .project-preview img { transform: scale(1.04); }
-
-    /* CARD BODY */
-    .project-body {
-      padding: 1.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-tag {
-      display: inline-block;
-      background: var(--gray);
-      color: var(--text-light);
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      margin-bottom: 0.75rem;
-    }
-
-    .project-body h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.2px;
-    }
-
-    .project-body p {
-      font-size: 0.875rem;
-      color: var(--text-light);
-      line-height: 1.65;
-      flex: 1;
-    }
-
-    .project-price {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--orange);
-      margin-top: 0.85rem;
-    }
-
-    .project-link {
-      margin-top: 0.6rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--orange);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    /* ABOUT BLOCK */
-    .about-block {
-      margin-top: 2.5rem;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 2rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-    }
-
-    .about-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--orange);
-      margin-bottom: 0.5rem;
-    }
-
-    .about-text p:last-child {
-      font-size: 0.95rem;
-      color: var(--text-light);
-      max-width: 480px;
-      line-height: 1.7;
-    }
-
-    .about-contacts {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.75rem;
-      flex-shrink: 0;
-    }
-
-    .contact-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--dark);
-      color: var(--white);
-      padding: 0.65rem 1.4rem;
-      border-radius: 6px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    .contact-btn:hover { background: var(--orange); color: var(--dark); }
-    .contact-btn svg { width: 16px; height: 16px; stroke: currentColor; }
-
-    .price-tag {
-      font-size: 0.8rem;
-      color: var(--text-light);
-    }
-
-    /* FOOTER */
-    footer {
-      background: var(--dark);
-      text-align: center;
-      padding: 1.5rem 2rem;
-      color: rgba(255,255,255,0.3);
-      font-size: 0.85rem;
-    }
-
-    footer a { color: var(--orange); text-decoration: none; }
-
-    @media (max-width: 700px) {
-      .projects { grid-template-columns: repeat(2, 1fr); }
-      .about-block { flex-direction: column; align-items: flex-start; }
-      .about-contacts { align-items: flex-start; }
-    }
-
-    @media (max-width: 480px) {
-      .projects { grid-template-columns: 1fr; }
-    }
-    
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <header>
-    <p class="header-label">Портфолио</p>
-    <h1>Веб-разработчик</h1>
-    <p class="header-sub">HTML, CSS, JavaScript — вёрстка и фронтенд. Быстро, чисто, адаптивно.</p>
-    <div class="header-links">
-      <a class="link-btn link-github" href="https://github.com/seregakuhar-commits" target="_blank" rel="noopener noreferrer">
-        <i data-lucide="github"></i>
-        GitHub
+  <!-- ============ Хедер ============ -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="На главную">
+        <span class="brand__mark">С</span>
+        <span>Сергей</span>
       </a>
+      <nav class="nav" aria-label="Основная навигация">
+        <div class="nav__links">
+          <a href="#works">Примеры работ</a>
+          <a href="#help">Чем могу помочь</a>
+          <a href="#process">Как работаю</a>
+          <a href="#faq">Вопросы</a>
+        </div>
+        <a class="btn btn--primary" href="https://t.me/SeregaKuhar" target="_blank" rel="noopener noreferrer">
+          <i data-lucide="send"></i>
+          <span class="btn-label">Рассказать об идее</span>
+        </a>
+      </nav>
     </div>
   </header>
 
   <main>
-    <div class="projects">
 
-      <a class="project-card" href="landing/index.html">
-        <div class="project-preview">
-          <img src="previews/landing.webp" alt="Скриншот: Лендинг строительной компании" width="640" height="336" loading="lazy">
+    <!-- ============ Hero ============ -->
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <span class="hero__eyebrow"><span class="dot"></span>Сайты для бизнеса</span>
+          <h1>Создаю современные сайты для бизнеса</h1>
+          <p class="hero__lead">
+            У каждого бизнеса свои задачи. Расскажите, что вы хотите видеть на сайте,
+            и вместе обсудим, как лучше реализовать вашу идею.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="https://t.me/SeregaKuhar" target="_blank" rel="noopener noreferrer">
+              <i data-lucide="send"></i>
+              Рассказать об идее
+            </a>
+            <a class="btn btn--ghost" href="#works">
+              Посмотреть работы
+              <i data-lucide="arrow-down"></i>
+            </a>
+          </div>
         </div>
-        <div class="project-body">
-          <span class="project-tag">HTML + CSS</span>
-          <h3>Лендинг строительной компании</h3>
-          <p>Многосекционный лендинг с навигацией, услугами, галереей и формой контакта.</p>
-          <span class="project-price">от 2 500 ₽</span>
-          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
-        </div>
-      </a>
 
-      <a class="project-card" href="calculator/index.html">
-        <div class="project-preview">
-          <img src="previews/calculator.webp" alt="Скриншот: Калькулятор стоимости ремонта" width="640" height="336" loading="lazy">
-        </div>
-        <div class="project-body">
-          <span class="project-tag">HTML + JS</span>
-          <h3>Калькулятор стоимости ремонта</h3>
-          <p>Интерактивный расчёт в реальном времени. Ввод площади, выбор типа ремонта.</p>
-          <span class="project-price">от 2 000 ₽</span>
-          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
-        </div>
-      </a>
-
-      <a class="project-card" href="cards/index.html">
-        <div class="project-preview">
-          <img src="previews/cards.webp" alt="Скриншот: Карточки услуг с hover-эффектами" width="640" height="336" loading="lazy">
-        </div>
-        <div class="project-body">
-          <span class="project-tag">HTML + CSS</span>
-          <h3>Карточки услуг с hover-эффектами</h3>
-          <p>CSS-анимации без JS: поднятие карточки, смена фона, трансформация иконки.</p>
-          <span class="project-price">от 1 500 ₽</span>
-          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
-        </div>
-      </a>
-
-      <div class="project-card">
-        <div class="project-preview">
-          <img src="previews/beauty-salon.webp" alt="Скриншот: Лендинг салона красоты" width="640" height="336" loading="lazy">
-        </div>
-        <div class="project-body">
-          <span class="project-tag">HTML + CSS + JS</span>
-          <h3>Лендинг салона красоты</h3>
-          <p>Светлая «тихая роскошь»: крем и пыльная роза. Hero, услуги, галерея, scroll-анимации.</p>
-          <span class="project-price">от 3 500 ₽</span>
-          <a class="project-link" href="beauty-salon/index.html">Открыть демо <i data-lucide="arrow-right"></i></a>
-          <a class="project-link" href="beauty-salon/case-study.html">Кейс: аудит доступности <i data-lucide="arrow-right"></i></a>
+        <div class="hero__visual reveal">
+          <div class="browser">
+            <div class="browser__bar"><span></span><span></span><span></span></div>
+            <div class="browser__shot">
+              <img src="previews/real-estate.webp" alt="Пример работы: сайт агентства недвижимости" width="640" height="400" fetchpriority="high">
+            </div>
+          </div>
+          <div class="hero__badge">
+            <span class="ic"><i data-lucide="check"></i></span>
+            Аккуратные сайты под задачу
+          </div>
         </div>
       </div>
+    </section>
 
-      <a class="project-card" href="cv/index.html">
-        <div class="project-preview">
-          <img src="previews/cv.webp" alt="Скриншот: CV / резюме" width="640" height="336" loading="lazy">
+    <!-- ============ Примеры работ ============ -->
+    <section class="section section--soft" id="works">
+      <div class="container">
+        <div class="section-head section-head--center reveal">
+          <span class="kicker">Примеры работ</span>
+          <h2 class="section-title">Несколько недавних работ</h2>
+          <p class="section-lead">Сначала посмотрите, как это выглядит, а детали обсудим потом.</p>
         </div>
-        <div class="project-body">
-          <span class="project-tag">HTML + CSS + JS</span>
-          <h3>CV / Резюме</h3>
-          <p>Двухколоночный макет с сайдбаром. Таймлайн опыта, прогресс-бары навыков, карточки проектов.</p>
-          <span class="project-price">от 2 000 ₽</span>
-          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
-        </div>
-      </a>
 
-      <a class="project-card" href="admin/index.html" target="_blank" rel="noopener noreferrer">
-        <div class="project-preview">
-          <img src="previews/admin.webp" alt="Скриншот: Админ-панель с аналитикой" width="640" height="336" loading="lazy">
-        </div>
-        <div class="project-body">
-          <span class="project-tag">HTML + CSS + JS</span>
-          <h3>Админ-панель</h3>
-          <p>Дашборд с аналитикой, таблицы заказов, товары, клиенты и настройки. Чистый HTML + CSS + JS.</p>
-          <span class="project-price">от 5 500 ₽</span>
-          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
-        </div>
-      </a>
-
-      <a class="project-card" href="nfc-card/index.html" target="_blank" rel="noopener noreferrer">
-        <div class="project-preview">
-          <img src="previews/nfc-card.webp" alt="Скриншот: Лендинг NFC-визиток" width="640" height="336" loading="lazy">
-        </div>
-        <div class="project-body">
-          <span class="project-tag">HTML + CSS + JS</span>
-          <h3>NFC-визитка</h3>
-          <p>Лендинг для бизнеса на цифровых NFC-визитках. Тёмный стиль, живая демо-карточка, тарифы.</p>
-          <span class="project-price">от 4 000 ₽</span>
-          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
-        </div>
-      </a>
-
-      <a class="project-card" href="cafe/index.html">
-        <div class="project-preview">
-          <img src="previews/cafe.webp" alt="Скриншот: Лендинг кафе" width="640" height="336" loading="lazy">
-        </div>
-        <div class="project-body">
-          <span class="project-tag">HTML + CSS + JS</span>
-          <h3>Лендинг кафе / ресторана</h3>
-          <p>Уютный светлый стиль. Hero, меню с ценами, галерея, отзывы, бронирование, контакты с картой.</p>
-          <span class="project-price">от 3 000 ₽</span>
-          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
-        </div>
-      </a>
-
-      <a class="project-card" href="real-estate/index.html">
-        <div class="project-preview">
-          <img src="previews/real-estate.webp" alt="Скриншот: Лендинг агентства недвижимости" width="640" height="336" loading="lazy">
-        </div>
-        <div class="project-body">
-          <span class="project-tag">HTML + CSS + JS</span>
-          <h3>Лендинг агентства недвижимости</h3>
-          <p>Карточки объектов, поиск, статистика компании, отзывы и форма консультации.</p>
-          <span class="project-price">от 3 500 ₽</span>
-          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
-        </div>
-      </a>
-
-      <a class="project-card" href="catalog/index.html">
-        <div class="project-preview">
-          <img src="previews/catalog.webp" alt="Скриншот: Каталог товаров с фильтрами" width="640" height="336" loading="lazy">
-        </div>
-        <div class="project-body">
-          <span class="project-tag">HTML + CSS + JS</span>
-          <h3>Каталог товаров</h3>
-          <p>Фильтрация по категории и цене, живой поиск, сортировка и счётчик корзины — без backend.</p>
-          <span class="project-price">от 4 000 ₽</span>
-          <span class="project-link">Открыть демо <i data-lucide="arrow-right"></i></span>
-        </div>
-      </a>
-
-    </div>
-
-    <div class="about-block">
-      <div class="about-text">
-        <p class="about-label">О разработчике</p>
-        <p>10 живых проектов: лендинги, каталог с корзиной, админ-панель. Чистый HTML/CSS/JS без конструкторов. На связи ежедневно, правки — в течение дня.</p>
-      </div>
-      <div class="about-contacts">
-        <a class="contact-btn" href="https://t.me/SeregaKuhar" target="_blank" rel="noopener noreferrer">
-          <i data-lucide="send"></i>
-          @SeregaKuhar
+        <a class="work-feature reveal" href="real-estate/index.html">
+          <div class="work-feature__media">
+            <img src="previews/real-estate.webp" alt="Сайт агентства недвижимости" width="640" height="400" loading="lazy">
+          </div>
+          <div class="work-feature__body">
+            <span class="work-feature__tag">Главная работа</span>
+            <h3>Сайт агентства недвижимости</h3>
+            <p>Показывает объекты и услуги агентства в выгодном виде.</p>
+            <p class="work-fit">Подходит, когда нужно представить недвижимость и получать заявки на просмотр.</p>
+            <span class="work-link">Посмотреть проект <i data-lucide="arrow-right"></i></span>
+          </div>
         </a>
-        <span class="price-tag">Лендинг от 2 500 ₽</span>
+
+        <div class="work-grid">
+          <a class="work-card reveal" href="beauty-salon/index.html">
+            <div class="work-card__media">
+              <img src="previews/beauty-salon.webp" alt="Сайт салона красоты" width="640" height="360" loading="lazy">
+            </div>
+            <div class="work-card__body">
+              <h3>Сайт салона красоты</h3>
+              <p>Услуги, галерея работ и удобная запись.</p>
+              <p class="work-fit">Подходит салонам и частным мастерам, которым важна онлайн-запись.</p>
+              <span class="work-link">Посмотреть проект <i data-lucide="arrow-right"></i></span>
+            </div>
+          </a>
+
+          <a class="work-card reveal" href="cafe/index.html">
+            <div class="work-card__media">
+              <img src="previews/cafe.webp" alt="Сайт кафе" width="640" height="360" loading="lazy">
+            </div>
+            <div class="work-card__body">
+              <h3>Сайт кафе</h3>
+              <p>Меню, атмосфера заведения и бронирование столика.</p>
+              <p class="work-fit">Подходит кафе и ресторанам, чтобы гость заранее всё увидел и забронировал место.</p>
+              <span class="work-link">Посмотреть проект <i data-lucide="arrow-right"></i></span>
+            </div>
+          </a>
+
+          <a class="work-card reveal" href="catalog/index.html">
+            <div class="work-card__media">
+              <img src="previews/catalog.webp" alt="Каталог товаров" width="640" height="360" loading="lazy">
+            </div>
+            <div class="work-card__body">
+              <h3>Каталог товаров</h3>
+              <p>Витрина товаров с поиском и фильтрами.</p>
+              <p class="work-fit">Подходит, когда нужно показать ассортимент и помочь быстро найти нужное.</p>
+              <span class="work-link">Посмотреть проект <i data-lucide="arrow-right"></i></span>
+            </div>
+          </a>
+        </div>
+
+        <div class="works-more reveal">
+          <a class="btn btn--ghost" href="projects.html">
+            Посмотреть все проекты
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <!-- ============ Чем могу помочь ============ -->
+    <section class="section" id="help">
+      <div class="container">
+        <div class="section-head section-head--center reveal">
+          <span class="kicker">Чем могу помочь</span>
+          <h2 class="section-title">С какими задачами обращаются</h2>
+          <p class="section-lead">Необязательно знать, как это назвать. Опишите ситуацию своими словами.</p>
+        </div>
+
+        <div class="help-grid">
+          <div class="help-card reveal">
+            <span class="help-card__ic"><i data-lucide="briefcase"></i></span>
+            <h3>Вы специалист или мастер</h3>
+            <p>Покажете, чем занимаетесь и сколько это стоит, разместите примеры работ и оставите удобный способ записаться или написать.</p>
+          </div>
+          <div class="help-card reveal">
+            <span class="help-card__ic"><i data-lucide="building-2"></i></span>
+            <h3>У вас компания или заведение</h3>
+            <p>Соберём страницу с направлениями работы, преимуществами, ответами на частые вопросы и контактами для заявок.</p>
+          </div>
+          <div class="help-card reveal">
+            <span class="help-card__ic"><i data-lucide="lightbulb"></i></span>
+            <h3>Есть идея, но нет чёткого плана</h3>
+            <p>Если пока только примерное понимание будущего сайта, вместе разберёмся, что показать и с чего начать.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Почему мне доверяют ============ -->
+    <section class="section section--soft" id="trust">
+      <div class="container">
+        <div class="section-head section-head--center reveal">
+          <span class="kicker">Почему мне доверяют</span>
+          <h2 class="section-title">Со мной спокойно и понятно работать</h2>
+        </div>
+
+        <div class="trust-grid">
+          <div class="trust-item reveal">
+            <span class="trust-item__ic"><i data-lucide="route"></i></span>
+            <div>
+              <h3>Понятный процесс</h3>
+              <p>Вы заранее понимаете, что будет происходить на каждом шаге после первого сообщения.</p>
+            </div>
+          </div>
+          <div class="trust-item reveal">
+            <span class="trust-item__ic"><i data-lucide="scale"></i></span>
+            <div>
+              <h3>Оценка до начала работы</h3>
+              <p>Сроки и стоимость обсуждаем до старта — вы заранее понимаете объём работ и за что платите.</p>
+            </div>
+          </div>
+          <div class="trust-item reveal">
+            <span class="trust-item__ic"><i data-lucide="list-checks"></i></span>
+            <div>
+              <h3>Согласование этапов</h3>
+              <p>Важные этапы согласовываем по ходу работы, поэтому в конце нет неожиданностей.</p>
+            </div>
+          </div>
+          <div class="trust-item reveal">
+            <span class="trust-item__ic"><i data-lucide="message-circle"></i></span>
+            <div>
+              <h3>Без сложных терминов</h3>
+              <p>Обсуждение ведётся человеческим языком.</p>
+            </div>
+          </div>
+          <div class="trust-item reveal">
+            <span class="trust-item__ic"><i data-lucide="life-buoy"></i></span>
+            <div>
+              <h3>Поддержка после завершения</h3>
+              <p>При необходимости можно обсудить обновление информации и сопровождение сайта.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Как проходит работа ============ -->
+    <section class="section" id="process">
+      <div class="container">
+        <div class="section-head section-head--center reveal">
+          <span class="kicker">Как проходит работа</span>
+          <h2 class="section-title">Пять простых шагов</h2>
+          <p class="section-lead">Чтобы вы заранее понимали, что будет после первого сообщения.</p>
+        </div>
+
+        <div class="process">
+          <div class="step reveal">
+            <span class="step__num">1</span>
+            <div class="step__body">
+              <h3>Расскажите о своей идее</h3>
+              <p>Опишите, что хотите видеть на сайте и зачем он вам нужен.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">2</span>
+            <div class="step__body">
+              <h3>Обсуждаем сайт и материалы</h3>
+              <p>Определяем, какая информация понадобится: услуги, контакты, фотографии, тексты и пожелания по стилю.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">3</span>
+            <div class="step__body">
+              <h3>Согласовываем решение</h3>
+              <p>Фиксируем структуру и общий план работы.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">4</span>
+            <div class="step__body">
+              <h3>Создаём сайт</h3>
+              <p>После согласования начинается разработка.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">5</span>
+            <div class="step__body">
+              <h3>Финальная проверка и передача проекта</h3>
+              <p>Проверяем сайт, согласовываем результат и передаём проект.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section section--soft" id="faq">
+      <div class="container">
+        <div class="section-head section-head--center reveal">
+          <span class="kicker">Частые вопросы</span>
+          <h2 class="section-title">Коротко о главном</h2>
+        </div>
+
+        <div class="faq">
+          <details class="faq__item reveal">
+            <summary>Сколько стоит сайт? <span class="chev"><i data-lucide="chevron-down"></i></span></summary>
+            <div class="faq__answer">Стоимость зависит от объёма: количества разделов, блоков и нужных функций. После короткого обсуждения я называю стоимость до начала работы, поэтому скрытых доплат по ходу не появляется.</div>
+          </details>
+          <details class="faq__item reveal">
+            <summary>Сколько времени занимает разработка? <span class="chev"><i data-lucide="chevron-down"></i></span></summary>
+            <div class="faq__answer">Сроки зависят от объёма сайта и готовности материалов. Ориентир по срокам вы получаете ещё до старта, а важные этапы согласуем по ходу — так понятно, на чём сейчас работа.</div>
+          </details>
+          <details class="faq__item reveal">
+            <summary>Что нужно для начала работы? <span class="chev"><i data-lucide="chevron-down"></i></span></summary>
+            <div class="faq__answer">Для старта достаточно описать идею своими словами. Дальше я подскажу, какие материалы понадобятся: тексты, фотографии, контакты и примеры сайтов, которые вам нравятся. Чего-то нет — подскажу, как лучше поступить.</div>
+          </details>
+          <details class="faq__item reveal">
+            <summary>Можно ли вносить правки? <span class="chev"><i data-lucide="chevron-down"></i></span></summary>
+            <div class="faq__answer">Да. Правки обсуждаем на согласованных этапах, поэтому результат не уходит в сторону. Объём правок оговариваем заранее, до начала работы, чтобы для вас не было неожиданностей.</div>
+          </details>
+          <details class="faq__item reveal">
+            <summary>Помогаете ли после завершения сайта? <span class="chev"><i data-lucide="chevron-down"></i></span></summary>
+            <div class="faq__answer">Да, при необходимости можно обсудить обновления, сопровождение или небольшие доработки после передачи проекта.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Финальный CTA ============ -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-panel reveal">
+          <h2>У каждого бизнеса свои задачи</h2>
+          <p>Расскажите, что вы хотите видеть на сайте. Можно просто обсудить идею, задать вопросы и вместе понять, с чего начать — без обязательств.</p>
+          <a class="btn btn--on-accent" href="https://t.me/SeregaKuhar" target="_blank" rel="noopener noreferrer">
+            <i data-lucide="send"></i>
+            Рассказать об идее
+          </a>
+        </div>
+      </div>
+    </section>
 
   </main>
 
-  <footer>Сергей · Веб-разработчик · <a href="https://t.me/SeregaKuhar" target="_blank" rel="noopener noreferrer">@SeregaKuhar</a></footer>
+  <!-- ============ Footer ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="brand" href="index.html">
+            <span class="brand__mark">С</span>
+            <span>Сергей</span>
+          </a>
+          <p>Создаю современные сайты для бизнеса.</p>
+        </div>
+        <div class="footer-contacts">
+          <span class="ftitle">Связаться</span>
+          <a href="https://t.me/SeregaKuhar" target="_blank" rel="noopener noreferrer">
+            <i data-lucide="send"></i>
+            Telegram: @SeregaKuhar
+          </a>
+          <a href="mailto:seregakuhar@gmail.com">
+            <i data-lucide="mail"></i>
+            seregakuhar@gmail.com
+          </a>
+          <!-- Телефон и MAX добавим позже:
+          <a href="tel:+70000000000"><i data-lucide="phone"></i>+7 000 000-00-00</a>
+          <a href="#"><i data-lucide="message-square"></i>MAX</a>
+          -->
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Сергей. Создаю современные сайты для бизнеса.</div>
+    </div>
+  </footer>
 
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" integrity="sha384-uTYyvsSSUZeaPhb5RbKlQa0zY/WpX/QHfvg2mczXyBQOpkWPEDy9lczyp+w7SKXu" crossorigin="anonymous"></script>
-  <script>lucide.createIcons();</script>
+  <script src="js/main.js"></script>
 </body>
 </html>
